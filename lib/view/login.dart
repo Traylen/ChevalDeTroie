@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'login',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: FormPage(),
-    );
-  }
-}
 
-class FormPage extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
   _FormPageState createState() => _FormPageState();
 }
 
-class _FormPageState extends State<FormPage> {
+final TextEditingController _emailController = TextEditingController();
+final TextEditingController _pswdController = TextEditingController();
+
+final List<String> _labelText = [
+    'Email',
+    'Password',
+  ];
+
+
+
+class _FormPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -37,7 +35,8 @@ class _FormPageState extends State<FormPage> {
               children: [
                 SizedBox(height: 20),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'email'),
+                  controller: _emailController,
+                  decoration: InputDecoration(labelText: 'Email'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez remplir ce champ';
@@ -47,7 +46,8 @@ class _FormPageState extends State<FormPage> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'mot de passe'),
+                  controller: _pswdController,
+                  decoration: InputDecoration(labelText: 'Mot de passe'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez remplir ce champ';
@@ -55,15 +55,18 @@ class _FormPageState extends State<FormPage> {
                     return null;
                   },
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Formulaire envoyé !')),
-                      );
-                    }
-                  },
-                  child: Text('connection'),
+                Padding(
+                  padding: const EdgeInsets.only(top: 79),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Formulaire envoyé !')),
+                        );
+                      }
+                    },
+                    child: Text('Connection'),
+                  ),
                 ),
               ],
             ),
