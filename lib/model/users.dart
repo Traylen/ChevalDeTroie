@@ -75,6 +75,9 @@ class Users {
     return this;
   }
 
+  String getId(){
+    return data['_id'];
+  }
 
   String getName(){
     return data['name'];
@@ -107,7 +110,8 @@ class Users {
   }
 
   Future<Users> findById(id) async {
-    List<Map<String, dynamic>> list = await Database().findByField(collection, '_id', ObjectId.fromHexString(id));
+    var currentObjectId = id is String ? ObjectId.fromHexString(id): id;
+    List<Map<String, dynamic>> list = await Database().findByField(collection, '_id', currentObjectId);
     data.addAll(list[0]);
     return this;
   }
