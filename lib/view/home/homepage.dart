@@ -1,4 +1,4 @@
-import 'package:chevaldetroie/View/home/description.dart';
+import 'package:chevaldetroie/view/home/description.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -10,8 +10,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List routes = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,14 +19,18 @@ class _HomePageState extends State<HomePage> {
           physics: const ScrollPhysics(), // a voir
           child: Column(
             children: <Widget>[
-              const Padding(
-                padding: EdgeInsets.all(8.0),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      Text("John Doe"),
-                      CircleAvatar(
-                        backgroundImage: NetworkImage(""),
+                      const Text("John Doe"),
+                      ElevatedButton(onPressed: () {
+                          Navigator.pushNamed(context, '/register');
+                      }, 
+                      child: const CircleAvatar(
+                          backgroundImage: NetworkImage(""),
+                        )
                       )
                     ]),
               ),

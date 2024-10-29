@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 
-class Register extends StatelessWidget {
+class Login extends StatelessWidget {
+  const Login({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'login',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: FormPage(),
-    );
+    return FormPage();
   }
 }
 
@@ -35,15 +30,6 @@ class _FormPageState extends State<FormPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'nom'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Veuillez remplir ce champ';
-                    }
-                    return null;
-                  },
-                ),
                 SizedBox(height: 20),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'email'),
@@ -64,13 +50,6 @@ class _FormPageState extends State<FormPage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
-                ElevatedButton.icon(
-                  onPressed: () async {},
-                  icon: Icon(Icons.upload_file),
-                  label: Text('Télécharger une image'),
-                ),
-                SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
@@ -79,7 +58,7 @@ class _FormPageState extends State<FormPage> {
                       );
                     }
                   },
-                  child: Text('Envoyer'),
+                  child: Text('connection'),
                 ),
               ],
             ),
