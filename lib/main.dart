@@ -60,6 +60,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String _counter = "test";
+  String age = "";
 
   void _incrementCounter() async {
       Users user = await Users().findById('6720ae7c9d86c2cdba000000');
@@ -71,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       // _counter++;
       _counter = user.getName();
+      age = user.getAge().toString();
     });
       
     }
@@ -116,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
               'You have pushed the button this many times:',
             ),
             Text(
-              '$_counter',
+              _counter + age,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],

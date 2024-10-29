@@ -1,5 +1,7 @@
 
 
+import 'dart:ffi';
+
 import 'package:chevaldetroie/model/database.dart';
 import 'package:chevaldetroie/model/roles.dart';
 import 'package:mongo_dart/mongo_dart.dart';
@@ -43,7 +45,7 @@ class Users {
     return this;
   }
 
-  Users setAge(age)
+  Users setAge(int age)
   {
     data.update("age", (value) => age);
     return this;
@@ -88,7 +90,7 @@ class Users {
   Roles getRole(){
     return data[''];
   }
-  String getAge(){
+  int getAge(){
     return data['age'];
   }
   String getPhone(){
