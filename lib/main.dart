@@ -1,3 +1,5 @@
+import 'package:chevaldetroie/model/database.dart';
+import 'package:chevaldetroie/model/users.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -59,6 +61,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
+      final Database db = Database();
+      Users().add(
+        {
+          "name": "Antoine",
+          'password': "azerty",
+          'role': 1,
+          'email': "antoine@gmail.com",
+          'photo': ".jpg",
+          'phone': '0666',
+          'age': 19,
+          'ffe_url': '',
+          'dp': ''
+        }
+      );
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
       // so that the display can reflect the updated values. If we changed
