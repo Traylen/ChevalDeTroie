@@ -1,5 +1,11 @@
+import 'dart:developer' as developer;
+
 import 'package:chevaldetroie/view/login.dart';
 import 'package:chevaldetroie/view/register.dart';
+import 'package:chevaldetroie/model/database.dart';
+import 'package:chevaldetroie/model/roles.dart';
+import 'package:chevaldetroie/model/users.dart';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -58,7 +64,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -68,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
-  }
+    }
 
   @override
   Widget build(BuildContext context) {
