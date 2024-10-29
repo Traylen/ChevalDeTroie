@@ -1,7 +1,7 @@
 
 import 'package:chevaldetroie/model/database.dart';
 
-class Users {
+class Roles {
   final String collection = "user";
 
   void add(Map<String, dynamic> data) {

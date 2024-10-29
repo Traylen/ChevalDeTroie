@@ -1,3 +1,5 @@
+import 'dart:developer' as developer;
+
 import 'package:chevaldetroie/model/database.dart';
 import 'package:chevaldetroie/model/users.dart';
 import 'package:flutter/material.dart';
@@ -57,30 +59,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  String _counter = "test";
 
   void _incrementCounter() {
     setState(() {
-      final Database db = Database();
-      Users().add(
-        {
-          "name": "Antoine",
-          'password': "azerty",
-          'role': 1,
-          'email': "antoine@gmail.com",
-          'photo': ".jpg",
-          'phone': '0666',
-          'age': 19,
-          'ffe_url': '',
-          'dp': ''
-        }
-      );
+      Users().findById('6720ae7c9d86c2cdba000000').then((value) {
+        _counter = value['name'];
+      });
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      _counter++;
+      // _counter++;
     });
   }
 
