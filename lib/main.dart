@@ -2,6 +2,9 @@ import 'package:chevaldetroie/view/concour.dart';
 import 'package:chevaldetroie/view/horseLesson.dart';
 import 'package:chevaldetroie/view/raveParty.dart';
 import 'package:flutter/material.dart';
+import 'View/home/homePage.dart';
+import 'View/authentification/login.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Raveparty(),
+      home: const FormPage(),
     );
   }
 }
