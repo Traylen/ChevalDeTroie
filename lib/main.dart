@@ -61,19 +61,19 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String _counter = "test";
 
-  void _incrementCounter() {
+  void _incrementCounter() async {
+      Users user = await Users().findById('6720ae7c9d86c2cdba000000');
     setState(() {
-      Users().findById('6720ae7c9d86c2cdba000000').then((value) {
-        _counter = value['name'];
-      });
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       // _counter++;
+      _counter = user.getName();
     });
-  }
+      
+    }
 
   @override
   Widget build(BuildContext context) {

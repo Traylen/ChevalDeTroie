@@ -15,7 +15,7 @@ class Users {
   'age': '',
   'phone': '',
   'photo': '',
-  'ffe_rul': '',
+  'ffe_url': '',
   'dp': '',
   };
 
@@ -73,8 +73,40 @@ class Users {
     return this;
   }
 
-  Future<Map<String, dynamic>> findById(id) async {
-    return await Database().findById(collection, '_id', ObjectId.fromHexString(id));
+
+  String getName(){
+    return data['name'];
+  }
+
+  String getEmail(){
+    return data['email'];
+  }
+
+  String getPassword(){
+    return data['password'];
+  }
+  Roles getRole(){
+    return data[''];
+  }
+  String getAge(){
+    return data['age'];
+  }
+  String getPhone(){
+    return data['phone'];
+  }
+  String getPhoto(){
+    return data['photo'];
+  }
+  String getFfeUrl(){
+    return data['ffe_url'];
+  }
+  String getDP(){
+    return data['dp'];
+  }
+
+  Future<Users> findById(id) async {
+    data.addAll(await Database().findById(collection, '_id', ObjectId.fromHexString(id)));
+    return this;
   }
 
   void insert() {
