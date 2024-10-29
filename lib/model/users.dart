@@ -41,7 +41,7 @@ class Users {
 
   Users setRole(Roles role)
   {
-    // data.update(<String, dynamic>{'': }.entries);
+    data.update('role', (value) => role.getId());
     return this;
   }
 
@@ -107,8 +107,20 @@ class Users {
   }
 
   Future<Users> findById(id) async {
-    data.addAll(await Database().findById(collection, '_id', ObjectId.fromHexString(id)));
+    List<Map<String, dynamic>> list = await Database().findByField(collection, '_id', ObjectId.fromHexString(id));
+    data.addAll(list[0]);
     return this;
+  }
+
+  Future<Users> findFirstByField(field, value) async {
+    List<Map<String, dynamic>> list = await Database().findByField(collection, field, value);
+    data.addAll(list[0]);
+    return this;
+  }
+
+  Future<List<Map<String, dynamic>>> findAllByField(field, value) async {
+    List<Map<String, dynamic>> list = await Database().findByField(collection, field, value);
+    return list;
   }
 
   void insert() {

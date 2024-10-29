@@ -10,9 +10,9 @@ void add(String collection, Map<String, dynamic> data) async {
   await db.close();
 }
 
-Future<Map<String, dynamic>> findById(collection, field, ObjectId value, {rating = 10}) async {
+Future<List<Map<String, dynamic>>> findByField(collection, field, value, {rating = 10}) async {
   await db.open();
-  var output = await db.collection(collection).find(where.eq(field, value)).first;
+  var output = await db.collection(collection).find(where.eq(field, value)).toList();
   await db.close();
   return output;
 }
