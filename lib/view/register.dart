@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:chevaldetroie/model/users.dart';
 import 'package:flutter/material.dart';
+import 'package:crypto/crypto.dart';
 
 final TextEditingController _emailController = TextEditingController();
 final TextEditingController _pswdController = TextEditingController();
@@ -79,7 +83,15 @@ class _RegisterPageState extends State<RegisterPage> {
                 ), 
                 Padding(
                   padding: const EdgeInsets.only(top: 79),
-                  child: ElevatedButton(onPressed: (){Users controller}, child: Text("Envoyer")),
+                  child: ElevatedButton(onPressed: (){
+                    var encode = utf8.encode(_pswdController.text);
+                    var ash = sha256.convert(encode).toString();
+                    Users()
+                  .setName(_nameController.text)
+                  .setEmail(_emailController.text)
+                  .setPassword(ash)
+                  .setPhoto(_PPController.text)
+                  .insert();}, child: Text("Envoyer")),
                 )
               ],
             ),
