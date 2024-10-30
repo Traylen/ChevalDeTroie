@@ -1,7 +1,9 @@
 import 'package:mongo_dart/mongo_dart.dart';
 
 class Database {
-  Db db = Db('mongodb://10.0.2.2:27017/flutter');
+  //Db db = Db('mongodb://10.0.2.2:27017/flutter');
+
+  Db db = Db('mongodb://127.0.0.1:27017/flutter');
 
   void add(String collection, Map<String, dynamic> data) async {
     await db.open();

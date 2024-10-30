@@ -134,7 +134,6 @@ class _ConcourState extends State<Concour> {
                   // .setPicture()
                   // .setDate(_selectedDate)
                   child: const Text('Envoyer'),
-
                 ),
               ],
             ),

@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:chevaldetroie/model/users.dart';
+import 'package:chevaldetroie/profiles/profileEdit.dart';
+import 'package:chevaldetroie/profiles/userProfile.dart';
 import 'package:chevaldetroie/view/register.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +80,8 @@ class _FormPageState extends State<LoginPage> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const RegisterPage()),
+                                  builder: (context) =>
+                                      Userprofile(test: login.getId())),
                             );
                           }
                           if (login.getPassword() != ash) {

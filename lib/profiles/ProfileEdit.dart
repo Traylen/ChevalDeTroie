@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:chevaldetroie/model/database.dart';
+import 'package:chevaldetroie/model/users.dart';
 
 class ProfileEdit extends StatefulWidget {
-  const ProfileEdit({super.key});
+  final kiwi; // Pass the user ID to the profile edit page
+  const ProfileEdit({super.key, required this.kiwi});
 
   @override
   State<ProfileEdit> createState() => _ProfileEditState();
@@ -11,6 +14,34 @@ class _ProfileEditState extends State<ProfileEdit> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  // Load user data from the database
+  Future<void> _loadUserData() async {
+    // Users user = await Users().findById(widget.test);
+    // _nameController.text = user.getName();
+    // _ageController.text = user.getAge().toString();
+    // _phoneController.text = user.getPhone();
+  }
+
+  // Update user information in the database
+  Future<void> _updateUserData() async {
+    Users user = Users()
+      ..setName(_nameController.text)
+      ..setAge(int.tryParse(_ageController.text) ?? 0)
+      ..setPhone(_phoneController.text);
+
+    Database().add(user.collection, user.data); // Save changes
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Modifications sauvegardées !")),
+    );
+    Navigator.pop(context); // Return to the previous screen
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,15 +92,9 @@ class _ProfileEditState extends State<ProfileEdit> {
               ),
               const SizedBox(height: 32),
               ElevatedButton(
-                onPressed: () {
-                  // Logique pour sauvegarder les modifications
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text("Modifications sauvegardées !")),
-                  );
-                },
+                onPressed: _updateUserData, // Update user information
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.yellow, // Couleur du bouton
+                  backgroundColor: Colors.yellow, // Button color
                 ),
                 child: const Text("Sauvegarder"),
               ),
