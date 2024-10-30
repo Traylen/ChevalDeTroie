@@ -1,3 +1,4 @@
+import 'package:chevaldetroie/model/concour.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -11,8 +12,6 @@ class Concour extends StatefulWidget {
 class _ConcourState extends State<Concour> {
   final _formKey = GlobalKey<FormState>();
 
-  String? _selectedOption1;
-  String? _selectedOption2;
   DateTime? _selectedDate;
 
   final TextEditingController _adresseController = TextEditingController();
@@ -71,7 +70,7 @@ class _ConcourState extends State<Concour> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 20), 
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: _PPController,
                   decoration: const InputDecoration(labelText: 'URL de photo'),
@@ -114,20 +113,22 @@ class _ConcourState extends State<Concour> {
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      Competition()
+                          .setName(_nameController.text)
+                          .setAdresse(_adresseController.text)
+                          .setDate(
+                              DateFormat('yyyy-MM-dd').format(_selectedDate!))
+                          .setPP(_PPController.text)
+                          .insert();
+
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text(
-                              'Date: ${_selectedDate != null ? DateFormat('dd/MM/yyyy').format(_selectedDate!) : 'Non sélectionnée'}'),
+                          content: Text("Leçon ajoutée avec succès"),
                         ),
                       );
                     }
                   },
-                  concour()
-                  .setName(_selectedName)
-                  .setAdresse(_adresseController)
-                  .setPicture()
-                  .setDate(_selectedDate)
-                  child: const Text('Envoyer'),
+                  child: Text("Envoyer"),
                 ),
               ],
             ),
