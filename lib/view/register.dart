@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:chevaldetroie/model/users.dart';
+import 'package:chevaldetroie/view/login.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto/crypto.dart';
 
@@ -100,7 +101,18 @@ class _RegisterPageState extends State<RegisterPage> {
                   .setEmail(_emailController.text)
                   .setPassword(ash)
                   .setPhoto(_PPController.text)
-                  .insert();}, child: Text("Envoyer")),
+                  .insert();
+                  Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Votre profile à été crée")),
+                            );
+                    }
+                  ,
+                   child: Text("Envoyer")),
                 )
               ],
             ),
