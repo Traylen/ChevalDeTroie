@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:chevaldetroie/model/users.dart';
+import 'package:chevaldetroie/view/authentification/login.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto/crypto.dart';
 
@@ -24,6 +25,14 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _pswdController.dispose();
+    _nameController.dispose();
+    super.dispose();
+  }
+
   final _formKey = GlobalKey<FormState>();
 
   String? validEmail(value) {
@@ -148,6 +157,10 @@ class _RegisterState extends State<Register> {
                         .setPassword(ash)
                         .setPhoto(_PPController.text)
                         .insert();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const FormPage()),
+                    );
                   },
                   child: const Text('Register'),
                 ),

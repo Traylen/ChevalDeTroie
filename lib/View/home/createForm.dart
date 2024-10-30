@@ -18,7 +18,7 @@ class _ChooseFormPageState extends State<ChooseFormPage> {
   ];
   List form = [
     const Concour(),
-    Horselesson(),
+    const HorseLesson(),
     Raveparty(),
   ];
   @override
@@ -38,16 +38,21 @@ class _ChooseFormPageState extends State<ChooseFormPage> {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => form[index]));
                 },
-                child: Card(
-                  child: SizedBox(
-                      width: 400,
-                      height: 150,
-                      child: Center(
-                          child: Text(
-                        title[index],
-                        style: const TextStyle(fontSize: 24),
-                      ))),
-                ),
+                child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        image: const DecorationImage(
+                          image: NetworkImage(
+                              "https://www.sports.gouv.fr/sites/default/files/2022-08/concours-complet---ffe-psv-2-jpg-699.jpg"),
+                          fit: BoxFit.cover,
+                        )),
+                    width: 400,
+                    height: 150,
+                    child: Center(
+                        child: Text(
+                      title[index],
+                      style: const TextStyle(fontSize: 28, color: Colors.white),
+                    ))),
               ),
             ),
           ),

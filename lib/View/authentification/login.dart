@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:chevaldetroie/model/users.dart';
 import 'package:chevaldetroie/view/authentification/register.dart';
 import 'package:chevaldetroie/view/home/homePage.dart';
-import 'package:chevaldetroie/view/register.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 
@@ -41,13 +40,13 @@ class _FormPageState extends State<FormPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 200,
-                  height: 200,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/logo_proj.png"))),
-                ),
+                // Container(
+                //   width: 200,
+                //   height: 200,
+                //   decoration: const BoxDecoration(
+                //       image: DecorationImage(
+                //           image: AssetImage("assets/logo_proj.png"))),
+                // ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -127,7 +126,8 @@ class _FormPageState extends State<FormPage> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const HomePage()),
+                                  builder: (context) =>
+                                      HomePage(userId: login.getId())),
                             );
                           }
                           if (login.getPassword() != ash) {
@@ -152,7 +152,6 @@ class _FormPageState extends State<FormPage> {
                           RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       )),
-                      // minimumSize: ,
                       minimumSize: WidgetStateProperty.all(const Size(380, 45)),
                       padding: WidgetStateProperty.all<EdgeInsets>(
                           const EdgeInsets.symmetric(horizontal: 44)),

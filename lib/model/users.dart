@@ -1,5 +1,3 @@
-
-
 import 'dart:ffi';
 
 import 'package:chevaldetroie/model/database.dart';
@@ -8,127 +6,126 @@ import 'package:mongo_dart/mongo_dart.dart';
 
 class Users {
   final String collection = "user";
-  Map<String, dynamic> data = <String, dynamic>
-  {
-  'name': '',
-  'email': '',
-  'password': '',
-  'role': '',
-  'age': '',
-  'phone': '',
-  'photo': '',
-  'ffe_url': '',
-  'dp': '',
+  Map<String, dynamic> data = <String, dynamic>{
+    'name': '',
+    'email': '',
+    'password': '',
+    'role': '',
+    'age': '',
+    'phone': '',
+    'photo': '',
+    'ffe_url': '',
+    'dp': '',
   };
 
-  Users setName(name)
-  {
+  Users setName(name) {
     data.update('name', (value) => name);
     return this;
   }
 
-  Users setEmail(email)
-  {
+  Users setEmail(email) {
     data.update('email', (value) => email);
     return this;
   }
 
-  Users setPassword(password)
-  {
+  Users setPassword(password) {
     data.update('password', (value) => password);
     return this;
   }
 
-  Users setRole(Roles role)
-  {
+  Users setRole(Roles role) {
     data.update('role', (value) => role.getId());
     return this;
   }
 
-  Users setAge(int age)
-  {
+  Users setAge(int age) {
     data.update("age", (value) => age);
     return this;
   }
 
-  Users setPhone(phone)
-  {
+  Users setPhone(phone) {
     data.update('phone', (value) => phone);
     return this;
   }
 
-  Users setPhoto(photo)
-  {
+  Users setPhoto(photo) {
     data.update("photo", (value) => photo);
     return this;
   }
 
-  Users setFfeUrl(ffeUrl)
-  {
+  Users setFfeUrl(ffeUrl) {
     data.update("ffe_url", (value) => ffeUrl);
     return this;
   }
 
-  Users setDP(DP)
-  {
+  Users setDP(DP) {
     data.update("dp", (value) => DP);
     return this;
   }
 
-  String getId(){
+  ObjectId getId() {
     return data['_id'];
   }
 
-  String getName(){
+  String getName() {
     return data['name'];
   }
 
-  String getEmail(){
+  String getEmail() {
     return data['email'];
   }
 
-  String getPassword(){
+  String getPassword() {
     return data['password'];
   }
-  Roles getRole(){
+
+  Roles getRole() {
     return data[''];
   }
-  int getAge(){
+
+  int getAge() {
     return data['age'];
   }
-  String getPhone(){
+
+  String getPhone() {
     return data['phone'];
   }
-  String getPhoto(){
+
+  String getPhoto() {
     return data['photo'];
   }
-  String getFfeUrl(){
+
+  String getFfeUrl() {
     return data['ffe_url'];
   }
-  String getDP(){
+
+  String getDP() {
     return data['dp'];
   }
 
   Future<Users> findById(id) async {
-    var currentObjectId = id is String ? ObjectId.fromHexString(id): id;
-    List<Map<String, dynamic>> list = await Database().findByField(collection, '_id', currentObjectId);
+    var currentObjectId = id is String ? ObjectId.fromHexString(id) : id;
+    List<Map<String, dynamic>> list =
+        await Database().findByField(collection, '_id', currentObjectId);
     data.addAll(list[0]);
     return this;
   }
 
   Future<Users> findFirstByField(field, value) async {
-    List<Map<String, dynamic>> list = await Database().findByField(collection, field, value);
+    List<Map<String, dynamic>> list =
+        await Database().findByField(collection, field, value);
     data.addAll(list[0]);
     return this;
   }
 
   Future<List<Map<String, dynamic>>> findAllByField(field, value) async {
-    List<Map<String, dynamic>> list = await Database().findByField(collection, field, value);
+    List<Map<String, dynamic>> list =
+        await Database().findByField(collection, field, value);
     return list;
   }
 
   void insert() {
-    if(data.isEmpty) throw('Missing data');
-      Database().add(collection, data);
+    if (data.isEmpty) throw ('Missing data');
+    Database().add(collection, data);
   }
 }

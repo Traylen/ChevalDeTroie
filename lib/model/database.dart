@@ -21,7 +21,8 @@ class Database {
   // trust me (kiwi)
   Future<List<Map<String, dynamic>>> findAll(collection) async {
     await db.open();
-    var output = await db.collection(collection).find().toList();
+    var output =
+        await db.collection(collection).find({"validate": "True"}).toList();
     await db.close();
     return output;
   }
