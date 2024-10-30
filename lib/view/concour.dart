@@ -13,12 +13,12 @@ class _ConcourState extends State<Concour> {
   String? _selectedOption2;
   DateTime? _selectedDate;
 
-  final List<String> _dropdownOptions1 = ['Manege', 'Carriere'];
-  final List<String> _dropdownOptions2 = [
-    'dressage',
-    'Saut d ostacle',
-    'Endurance'
-  ];
+  final TextEditingController _adresseController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _PPController = TextEditingController();
+
+  final List<String> _labelText = ['Name', 'Adresse', 'PPUrl'];
+
 //datepicker pour pas oublier
   Future<void> _pickDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -38,7 +38,7 @@ class _ConcourState extends State<Concour> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('horselesson'),
+        title: Text('concour'),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -49,6 +49,7 @@ class _ConcourState extends State<Concour> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
+                  controller: _nameController,
                   decoration: InputDecoration(labelText: 'nom'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -59,6 +60,7 @@ class _ConcourState extends State<Concour> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
+                  controller: _adresseController,
                   decoration: InputDecoration(labelText: 'adresse'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -69,6 +71,7 @@ class _ConcourState extends State<Concour> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
+                  controller: _PPController,
                   decoration: InputDecoration(labelText: 'URL de photo'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -111,8 +114,7 @@ class _ConcourState extends State<Concour> {
                     if (_formKey.currentState!.validate()) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Option 1: $_selectedOption1\n'
-                              'Option 2: $_selectedOption2\n'
+                          content: Text(
                               'Date: ${_selectedDate != null ? DateFormat('dd/MM/yyyy').format(_selectedDate!) : 'Non sélectionnée'}'),
                         ),
                       );

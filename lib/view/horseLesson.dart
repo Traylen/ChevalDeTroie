@@ -12,14 +12,17 @@ class _HorselessonState extends State<Horselesson> {
   String? _selectedOption1;
   String? _selectedOption2;
   DateTime? _selectedDate;
+  TimeOfDay? _selectedTime;
 
-  final List<String> _dropdownOptions1 = ['Manege', 'Carriere'];
+  final TextEditingController _PPController = TextEditingController();
+
+  final List<String> _dropdownOptions1 = ['Manège', 'Carrière'];
   final List<String> _dropdownOptions2 = [
-    'dressage',
-    'Saut d ostacle',
+    'Dressage',
+    'Saut d’obstacle',
     'Endurance'
   ];
-//datepicker pour pas oublier
+
   Future<void> _pickDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -34,11 +37,29 @@ class _HorselessonState extends State<Horselesson> {
     }
   }
 
+  Future<void> _pickTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      builder: (BuildContext context, Widget? child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null && picked != _selectedTime) {
+      setState(() {
+        _selectedTime = picked;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('horselesson'),
+        title: Text('Horselesson'),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -50,7 +71,8 @@ class _HorselessonState extends State<Horselesson> {
               children: [
                 // Dropdown 1
                 DropdownButtonFormField<String>(
-                  decoration: InputDecoration(labelText: 'prendre un terrain'),
+                  decoration:
+                      InputDecoration(labelText: 'Sélectionner un terrain'),
                   value: _selectedOption1,
                   items: _dropdownOptions1.map((String value) {
                     return DropdownMenuItem<String>(
@@ -70,7 +92,7 @@ class _HorselessonState extends State<Horselesson> {
 
                 // Dropdown 2
                 DropdownButtonFormField<String>(
-                  decoration: InputDecoration(labelText: 'type de lesson'),
+                  decoration: InputDecoration(labelText: 'Type de leçon'),
                   value: _selectedOption2,
                   items: _dropdownOptions2.map((String value) {
                     return DropdownMenuItem<String>(
@@ -88,7 +110,6 @@ class _HorselessonState extends State<Horselesson> {
                 ),
                 SizedBox(height: 20),
 
-                // Date Picker
                 Row(
                   children: [
                     Expanded(
@@ -113,6 +134,31 @@ class _HorselessonState extends State<Horselesson> {
                   ],
                 ),
                 SizedBox(height: 20),
+
+                // Time Picker
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Sélectionner une heure',
+                          hintText: _selectedTime != null
+                              ? _selectedTime!.format(context)
+                              : 'Aucune heure sélectionnée',
+                        ),
+                        readOnly: true,
+                        onTap: () => _pickTime(context),
+                        validator: (value) => _selectedTime == null
+                            ? 'Veuillez choisir une heure'
+                            : null,
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.access_time),
+                      onPressed: () => _pickTime(context),
+                    ),
+                  ],
+                ),
 
                 ElevatedButton(
                   onPressed: () {

@@ -10,7 +10,6 @@ class _RavepartyState extends State<Raveparty> {
   final _formKey = GlobalKey<FormState>();
 
   String? _selectedOption1;
-  String? _selectedOption2;
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
 
@@ -31,11 +30,16 @@ class _RavepartyState extends State<Raveparty> {
     }
   }
 
-  // Time picker function
   Future<void> _pickTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
+      builder: (BuildContext context, Widget? child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+          child: child!,
+        );
+      },
     );
     if (picked != null && picked != _selectedTime) {
       setState(() {
