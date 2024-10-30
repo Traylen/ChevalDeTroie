@@ -128,7 +128,13 @@ class _ConcourState extends State<Concour> {
                       );
                     }
                   },
-                  child: Text("Envoyer"),
+                  // concour()
+                  // .setName(_selectedName)
+                  // .setAdresse(_adresseController)
+                  // .setPicture()
+                  // .setDate(_selectedDate)
+                  child: const Text('Envoyer'),
+
                 ),
               ],
             ),
