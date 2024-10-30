@@ -1,24 +1,29 @@
+
+import 'dart:convert';
+
+import 'package:chevaldetroie/model/users.dart';
 import 'package:flutter/material.dart';
+import 'package:crypto/crypto.dart';
 
-class Register extends StatelessWidget {
+final TextEditingController _emailController = TextEditingController();
+final TextEditingController _pswdController = TextEditingController();
+final TextEditingController _nameController = TextEditingController();
+final TextEditingController _PPController = TextEditingController();
+
+final List<String> _labelText = [
+    'Name'
+    'Email',
+    'Password',
+    'PPUrl'
+  ];
+
+class RegisterPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'login',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: FormPage(),
-    );
-  }
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class FormPage extends StatefulWidget {
-  @override
-  _FormPageState createState() => _FormPageState();
-}
+class _RegisterPageState extends State<RegisterPage> {
 
-class _FormPageState extends State<FormPage> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -36,6 +41,9 @@ class _FormPageState extends State<FormPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
+
+                  controller: _nameController,
+
                   decoration: InputDecoration(labelText: 'nom'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -46,6 +54,9 @@ class _FormPageState extends State<FormPage> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
+
+                  controller: _emailController,
+
                   decoration: InputDecoration(labelText: 'email'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -56,6 +67,9 @@ class _FormPageState extends State<FormPage> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
+
+                  controller: _pswdController,
+
                   decoration: InputDecoration(labelText: 'mot de passe'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -65,22 +79,29 @@ class _FormPageState extends State<FormPage> {
                   },
                 ),
                 SizedBox(height: 20),
-                ElevatedButton.icon(
-                  onPressed: () async {},
-                  icon: Icon(Icons.upload_file),
-                  label: Text('Télécharger une image'),
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Formulaire envoyé !')),
-                      );
+
+                TextFormField(
+                  controller: _PPController,
+                  decoration: InputDecoration(labelText: 'Url photo de profil sale pd'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Veuillez remplir ce champ';
                     }
+                    return null;
                   },
-                  child: Text('Envoyer'),
-                ),
+                ), 
+                Padding(
+                  padding: const EdgeInsets.only(top: 79),
+                  child: ElevatedButton(onPressed: (){
+                    var encode = utf8.encode(_pswdController.text);
+                    var ash = sha256.convert(encode).toString();
+                    Users()
+                  .setName(_nameController.text)
+                  .setEmail(_emailController.text)
+                  .setPassword(ash)
+                  .setPhoto(_PPController.text)
+                  .insert();}, child: Text("Envoyer")),
+                )
               ],
             ),
           ),
@@ -89,3 +110,4 @@ class _FormPageState extends State<FormPage> {
     );
   }
 }
+

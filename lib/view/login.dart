@@ -1,24 +1,27 @@
+import 'dart:convert';
+
+import 'package:chevaldetroie/model/users.dart';
+import 'package:chevaldetroie/view/register.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 
-class Login extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'login',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: FormPage(),
-    );
-  }
-}
 
-class FormPage extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
   _FormPageState createState() => _FormPageState();
 }
 
-class _FormPageState extends State<FormPage> {
+final TextEditingController _emailController = TextEditingController();
+final TextEditingController _pswdController = TextEditingController();
+
+final List<String> _labelText = [
+    'Email',
+    'Password',
+  ];
+
+
+
+class _FormPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -37,7 +40,8 @@ class _FormPageState extends State<FormPage> {
               children: [
                 SizedBox(height: 20),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'email'),
+                  controller: _emailController,
+                  decoration: InputDecoration(labelText: 'Email'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez remplir ce champ';
@@ -47,7 +51,9 @@ class _FormPageState extends State<FormPage> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'mot de passe'),
+                
+                  controller: _pswdController,
+                  decoration: InputDecoration(labelText: 'Mot de passe'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez remplir ce champ';
@@ -55,15 +61,37 @@ class _FormPageState extends State<FormPage> {
                     return null;
                   },
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Formulaire envoyé !')),
-                      );
-                    }
-                  },
-                  child: Text('connection'),
+                Padding(
+                  padding: const EdgeInsets.only(top: 79),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        Users login = Users();
+                        await login.findFirstByField("email", _emailController.text);
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //   SnackBar(content: Text (login.getEmail())),
+                        // );
+                        if (login.getEmail() != ""){
+                          var encode = utf8.encode(_pswdController.text);
+                          var ash = sha256.convert(encode).toString();
+                          
+                          if (login.getPassword()==ash){
+                            Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RegisterPage()),
+                            );
+                          }
+                          if (login.getPassword()!=ash){
+                            ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("L'email ou le mot de passe est incorrect !")),
+                            );
+                          }
+                        }
+                      }
+                    },
+                    child: Text('Connection'),
+                  ),
                 ),
               ],
             ),
