@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Raveparty extends StatefulWidget {
+  const Raveparty({super.key});
+
   @override
   _RavepartyState createState() => _RavepartyState();
 }
@@ -48,11 +50,11 @@ class _RavepartyState extends State<Raveparty> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Raveparty'),
+        title: const Text('Raveparty'),
       ),
       body: Center(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Form(
             key: _formKey,
             child: Column(
@@ -60,7 +62,8 @@ class _RavepartyState extends State<Raveparty> {
               children: [
                 // Dropdown 1
                 DropdownButtonFormField<String>(
-                  decoration: InputDecoration(labelText: 'Thème de la soirée'),
+                  decoration:
+                      const InputDecoration(labelText: 'Thème de la soirée'),
                   value: _selectedOption1,
                   items: _dropdownOptions1.map((String value) {
                     return DropdownMenuItem<String>(
@@ -76,9 +79,9 @@ class _RavepartyState extends State<Raveparty> {
                   validator: (value) =>
                       value == null ? 'Veuillez choisir une option' : null,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'URL de photo'),
+                  decoration: const InputDecoration(labelText: 'URL de photo'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez remplir ce champ';
@@ -86,7 +89,7 @@ class _RavepartyState extends State<Raveparty> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // Date Picker
                 Row(
@@ -107,12 +110,12 @@ class _RavepartyState extends State<Raveparty> {
                       ),
                     ),
                     IconButton(
-                      icon: Icon(Icons.calendar_today),
+                      icon: const Icon(Icons.calendar_today),
                       onPressed: () => _pickDate(context),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // Time Picker
                 Row(
@@ -133,12 +136,12 @@ class _RavepartyState extends State<Raveparty> {
                       ),
                     ),
                     IconButton(
-                      icon: Icon(Icons.access_time),
+                      icon: const Icon(Icons.access_time),
                       onPressed: () => _pickTime(context),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 ElevatedButton(
                   onPressed: () {
@@ -152,7 +155,7 @@ class _RavepartyState extends State<Raveparty> {
                       );
                     }
                   },
-                  child: Text('Envoyer'),
+                  child: const Text('Envoyer'),
                 ),
               ],
             ),

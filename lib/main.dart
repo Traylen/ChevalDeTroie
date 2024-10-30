@@ -1,10 +1,7 @@
-import 'package:chevaldetroie/view/concour.dart';
-import 'package:chevaldetroie/view/horseLesson.dart';
-import 'package:chevaldetroie/view/raveParty.dart';
 import 'package:flutter/material.dart';
-import 'View/home/homePage.dart';
-import 'View/authentification/login.dart';
-
+import 'view/authentification/login.dart';
+import 'view/home/createForm.dart';
+import 'view/home/homePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const FormPage(),
+      home: const HomePage(),
     );
   }
 }

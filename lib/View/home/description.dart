@@ -65,21 +65,6 @@ class _DescriptionState extends State<Description> {
                       color: Colors.white,
                     ),
                   )),
-                  Positioned(
-                    top: 370,
-                    right: -30,
-                    child: RotationTransition(
-                      turns: const AlwaysStoppedAnimation(-22 / 360),
-                      child: Container(
-                        height: 150,
-                        width: 600,
-                        decoration: const BoxDecoration(
-                            color: Color(0xffe3eaf1),
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(1000))),
-                      ),
-                    ),
-                  ),
                 ],
               ),
               Container(
@@ -87,8 +72,9 @@ class _DescriptionState extends State<Description> {
                 width: double.infinity,
                 decoration: const BoxDecoration(
                     color: Color(0xffe3eaf1),
-                    borderRadius:
-                        BorderRadius.only(topLeft: Radius.circular(58))),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30))),
                 child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -99,7 +85,10 @@ class _DescriptionState extends State<Description> {
                         children: [
                           Padding(
                             padding: EdgeInsets.all(8.0),
-                            child: CircleAvatar(),
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  "https://media.istockphoto.com/id/827157432/fr/photo/tranche-de-kiwi-fruit-isol%C3%A9-sur-blanc.jpg?s=612x612&w=0&k=20&c=SdRo3U0dMSppce_PhN-Okd2vcUg_jRaJTI7FqBtHteU="),
+                            ),
                           ),
                           Text(
                             "Super Title",

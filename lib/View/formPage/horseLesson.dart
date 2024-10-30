@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Horselesson extends StatefulWidget {
+  const Horselesson({super.key});
+
   @override
   _HorselessonState createState() => _HorselessonState();
 }
@@ -38,11 +40,11 @@ class _HorselessonState extends State<Horselesson> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('horselesson'),
+        title: const Text('horselesson'),
       ),
       body: Center(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Form(
             key: _formKey,
             child: Column(
@@ -50,7 +52,8 @@ class _HorselessonState extends State<Horselesson> {
               children: [
                 // Dropdown 1
                 DropdownButtonFormField<String>(
-                  decoration: InputDecoration(labelText: 'prendre un terrain'),
+                  decoration:
+                      const InputDecoration(labelText: 'prendre un terrain'),
                   value: _selectedOption1,
                   items: _dropdownOptions1.map((String value) {
                     return DropdownMenuItem<String>(
@@ -66,11 +69,12 @@ class _HorselessonState extends State<Horselesson> {
                   validator: (value) =>
                       value == null ? 'Veuillez choisir une option' : null,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // Dropdown 2
                 DropdownButtonFormField<String>(
-                  decoration: InputDecoration(labelText: 'type de lesson'),
+                  decoration:
+                      const InputDecoration(labelText: 'type de lesson'),
                   value: _selectedOption2,
                   items: _dropdownOptions2.map((String value) {
                     return DropdownMenuItem<String>(
@@ -86,7 +90,7 @@ class _HorselessonState extends State<Horselesson> {
                   validator: (value) =>
                       value == null ? 'Veuillez choisir une option' : null,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // Date Picker
                 Row(
@@ -107,12 +111,12 @@ class _HorselessonState extends State<Horselesson> {
                       ),
                     ),
                     IconButton(
-                      icon: Icon(Icons.calendar_today),
+                      icon: const Icon(Icons.calendar_today),
                       onPressed: () => _pickDate(context),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 ElevatedButton(
                   onPressed: () {
@@ -126,7 +130,7 @@ class _HorselessonState extends State<Horselesson> {
                       );
                     }
                   },
-                  child: Text('Envoyer'),
+                  child: const Text('Envoyer'),
                 ),
               ],
             ),

@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../home/homePage.dart';
 import 'register.dart';
 
-class FormPage extends StatefulWidget {
-  const FormPage({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  _FormPageState createState() => _FormPageState();
+  _LoginState createState() => _LoginState();
 }
 
-class _FormPageState extends State<FormPage> {
+class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
 
   @override
