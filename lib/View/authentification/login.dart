@@ -40,13 +40,13 @@ class _FormPageState extends State<FormPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Container(
-                //   width: 200,
-                //   height: 200,
-                //   decoration: const BoxDecoration(
-                //       image: DecorationImage(
-                //           image: AssetImage("assets/logo_proj.png"))),
-                // ),
+                Container(
+                  width: 200,
+                  height: 200,
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/logo_proj.png"))),
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -126,8 +126,10 @@ class _FormPageState extends State<FormPage> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      HomePage(userId: login.getId())),
+                                  builder: (context) => HomePage(
+                                        userId: login.getId(),
+                                        username: login.getName(),
+                                      )),
                             );
                           }
                           if (login.getPassword() != ash) {

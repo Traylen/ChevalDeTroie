@@ -42,7 +42,7 @@ class Lessons {
     return this;
   }
 
-  String getId() {
+  ObjectId getId() {
     return data['_id'];
   }
 

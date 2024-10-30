@@ -11,7 +11,9 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   final userId;
-  const HomePage({super.key, required this.userId});
+  // dsl mais trop flm
+  final username;
+  const HomePage({super.key, required this.userId, required this.username});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -20,7 +22,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _index = 0;
   late final List routes = [
-    Home2(userId: widget.userId),
+    Home2(
+      userId: widget.userId,
+      username: widget.username,
+    ),
     const Calendar(),
     const ChooseFormPage(),
     const Userprofile(),
@@ -59,8 +64,9 @@ class _HomePageState extends State<HomePage> {
 
 class Home2 extends StatefulWidget {
   final userId;
+  final username;
 
-  const Home2({super.key, required this.userId});
+  const Home2({super.key, required this.userId, required this.username});
 
   @override
   State<Home2> createState() => _Home2State();
@@ -80,8 +86,6 @@ void filter(filters) {
 class _Home2State extends State<Home2> {
   @override
   Widget build(BuildContext context) {
-    print(widget.userId);
-
     return SafeArea(
       child: SingleChildScrollView(
         physics: const ScrollPhysics(), // a voir
@@ -189,8 +193,10 @@ class _Home2State extends State<Home2> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const Description()),
+                                      builder: (context) => Description(
+                                            id: data[index]["_id"],
+                                            id_user: widget.username,
+                                          )),
                                 );
                               })
                             },
@@ -236,7 +242,8 @@ class _Home2State extends State<Home2> {
                                       children: [
                                         Text(
                                             data[index]["type"] ??
-                                                data[index]["theme"],
+                                                data[index]["theme"] ??
+                                                data[index]["name"],
                                             style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 24)),

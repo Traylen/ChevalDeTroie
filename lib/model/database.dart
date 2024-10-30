@@ -27,6 +27,17 @@ class Database {
     return output;
   }
 
+  Future<void> updateOne(collection, id, participant, field) async {
+    await db.open();
+    var output = await db.collection(collection).updateOne(
+        where.id(id),
+        {
+          '\$push': {field: participant}
+        },
+        upsert: true);
+    await db.close();
+  }
+
   DbCollection collection(String collection) {
     return db.collection(collection);
   }

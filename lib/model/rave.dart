@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:chevaldetroie/model/database.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
@@ -8,6 +10,8 @@ class Rave {
     'picture': '',
     'date': '',
     'validate': '',
+    'participants': [],
+    'commentaire': []
   };
 
   Rave setTheme(String theme) {
@@ -30,7 +34,7 @@ class Rave {
     return this;
   }
 
-  String getId() {
+  ObjectId getId() {
     return data['_id'];
   }
 
@@ -48,6 +52,22 @@ class Rave {
 
   bool getValidate() {
     return data['validate'];
+  }
+
+  getParticipants() {
+    return data['participants'];
+  }
+
+  int getLengthParticipants() {
+    return data['participants'].length;
+  }
+
+  getCommentaire() {
+    return data['commentaire'];
+  }
+
+  int getLengthCommentaire() {
+    return data['commentaire'].length;
   }
 
   Future<Rave> findById(id) async {
@@ -75,6 +95,10 @@ class Rave {
   Future<List<Map<String, dynamic>>> getAll() async {
     List<Map<String, dynamic>> list = await Database().findAll(collection);
     return list;
+  }
+
+  Future<void> edtiRave(id, participant, field) async {
+    await Database().updateOne(collection, id, participant, field);
   }
 
   void insert() {
