@@ -1,3 +1,4 @@
+import 'package:chevaldetroie/model/rave.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -12,6 +13,7 @@ class _RavepartyState extends State<Raveparty> {
   String? _selectedOption1;
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
+  bool? validate;
 
   final TextEditingController _PPController = TextEditingController();
 
@@ -121,50 +123,27 @@ class _RavepartyState extends State<Raveparty> {
                 ),
                 SizedBox(height: 20),
 
-                // Time Picker
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Sélectionner une heure',
-                          hintText: _selectedTime != null
-                              ? _selectedTime!.format(context)
-                              : 'Aucune heure sélectionnée',
-                        ),
-                        readOnly: true,
-                        onTap: () => _pickTime(context),
-                        validator: (value) => _selectedTime == null
-                            ? 'Veuillez choisir une heure'
-                            : null,
-                      ),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.access_time),
-                      onPressed: () => _pickTime(context),
-                    ),
-                  ],
-                ),
                 SizedBox(height: 20),
 
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      Rave()
+                          .setTheme(_selectedOption1!)
+                          .setPicture(_PPController.text)
+                          .setDate(
+                              DateFormat('yyyy-MM-dd').format(_selectedDate!))
+                          .setValidate('False')
+                          .insert();
+
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Option 1: $_selectedOption1\n'
-                              'Date: ${_selectedDate != null ? DateFormat('dd/MM/yyyy').format(_selectedDate!) : 'Non sélectionnée'}\n'
-                              'Heure: ${_selectedTime != null ? _selectedTime!.format(context) : 'Non sélectionnée'}'),
+                          content: Text("Leçon ajoutée avec succès"),
                         ),
                       );
                     }
                   },
-                  //  rave()
-                  //  .setTheme(_selectedOption1)
-                  //  .setPicture(_PPController)
-                  //  .setDate(_selectedDate)
-                  //  .setTime(_selectedTime)
-                  child: Text('Envoyer'),
+                  child: Text("Envoyer"),
                 ),
               ],
             ),

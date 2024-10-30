@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:chevaldetroie/model/users.dart';
+import 'package:chevaldetroie/view/login.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto/crypto.dart';
 
@@ -86,18 +87,26 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 79),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        var encode = utf8.encode(_pswdController.text);
-                        var ash = sha256.convert(encode).toString();
-                        Users()
-                            .setName(_nameController.text)
-                            .setEmail(_emailController.text)
-                            .setPassword(ash)
-                            .setPhoto(_PPController.text)
-                            .insert();
-                      },
-                      child: const Text("Envoyer")),
+                  child: ElevatedButton(onPressed: (){
+                    var encode = utf8.encode(_pswdController.text);
+                    var ash = sha256.convert(encode).toString();
+                    Users()
+                  .setName(_nameController.text)
+                  .setEmail(_emailController.text)
+                  .setPassword(ash)
+                  .setPhoto(_PPController.text)
+                  .insert();
+                  Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Votre profile à été crée")),
+                            );
+                    }
+                  ,
+                   child: Text("Envoyer")),
                 )
               ],
             ),

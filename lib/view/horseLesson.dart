@@ -1,12 +1,13 @@
+import 'package:chevaldetroie/model/lesson.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class Horselesson extends StatefulWidget {
+class HorseLesson extends StatefulWidget {
   @override
-  _HorselessonState createState() => _HorselessonState();
+  _HorseLessonState createState() => _HorseLessonState();
 }
 
-class _HorselessonState extends State<Horselesson> {
+class _HorseLessonState extends State<HorseLesson> {
   final _formKey = GlobalKey<FormState>();
 
   String? _selectedOption1;
@@ -62,7 +63,7 @@ class _HorselessonState extends State<Horselesson> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Horselesson'),
+        title: Text('Horse Lesson'),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -112,6 +113,8 @@ class _HorselessonState extends State<Horselesson> {
                       value == null ? 'Veuillez choisir une option' : null,
                 ),
                 SizedBox(height: 20),
+
+                // Dropdown 3 (Durée)
                 DropdownButtonFormField<String>(
                   decoration: InputDecoration(labelText: 'Durée'),
                   value: _selectedOption3,
@@ -129,7 +132,9 @@ class _HorselessonState extends State<Horselesson> {
                   validator: (value) =>
                       value == null ? 'Veuillez choisir une option' : null,
                 ),
+                SizedBox(height: 20),
 
+                // Date Picker
                 Row(
                   children: [
                     Expanded(
@@ -162,9 +167,9 @@ class _HorselessonState extends State<Horselesson> {
                       child: TextFormField(
                         decoration: InputDecoration(
                           labelText: 'Sélectionner une heure',
-                          hintText: _selectedTime != null
-                              ? _selectedTime!.format(context)
-                              : 'Aucune heure sélectionnée',
+                          // hintText: _selectedTime != null
+                          //     ? _selectedTime!.format(context)
+                          //     : 'Aucune heure sélectionnée',
                         ),
                         readOnly: true,
                         onTap: () => _pickTime(context),
@@ -179,26 +184,27 @@ class _HorselessonState extends State<Horselesson> {
                     ),
                   ],
                 ),
-
+                SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      Lessons()
+                          .setTerrain(_selectedOption1!)
+                          .setType(_selectedOption2!)
+                          .setDate(
+                              DateFormat('yyyy-MM-dd').format(_selectedDate!))
+                          .setDuree(_selectedOption3!)
+                          .setTime(_selectedTime!.format(context))
+                          .setValidate('False')
+                          .insert();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Option 1: $_selectedOption1\n'
-                              'Option 2: $_selectedOption2\n'
-                              'Date: ${_selectedDate != null ? DateFormat('dd/MM/yyyy').format(_selectedDate!) : 'Non sélectionnée'}'),
+                          content: Text("Leçon ajoutée avec succès"),
                         ),
                       );
                     }
                   },
-                  // Lessons()
-                  // .setTerrain(_selectedOption1)
-                  // .setType(_selectedOption2)
-                  // .setDate(_selectedDate)
-                  // .setTime(_selectedTime)
-                  // .setDuree(_selectedOption3)
-                  child: Text('Envoyer'),
+                  child: Text("Envoyer"),
                 ),
               ],
             ),
