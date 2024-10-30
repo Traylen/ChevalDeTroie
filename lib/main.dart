@@ -1,5 +1,6 @@
 import 'dart:developer' as developer;
 
+import 'package:chevaldetroie/view/home/homePage.dart';
 import 'package:chevaldetroie/view/login.dart';
 import 'package:chevaldetroie/view/raveParty.dart';
 import 'package:chevaldetroie/view/register.dart';
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const FormPage(),
+      // home: const FormPage(),
+      home: const HomePage(),
     );
   }
 }
