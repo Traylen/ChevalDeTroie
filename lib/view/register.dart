@@ -1,4 +1,9 @@
+
+import 'dart:convert';
+
+import 'package:chevaldetroie/model/users.dart';
 import 'package:flutter/material.dart';
+import 'package:crypto/crypto.dart';
 
 final TextEditingController _emailController = TextEditingController();
 final TextEditingController _pswdController = TextEditingController();
@@ -18,6 +23,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -35,7 +41,9 @@ class _RegisterPageState extends State<RegisterPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
+
                   controller: _nameController,
+
                   decoration: InputDecoration(labelText: 'nom'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -46,7 +54,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
+
                   controller: _emailController,
+
                   decoration: InputDecoration(labelText: 'email'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -57,7 +67,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
+
                   controller: _pswdController,
+
                   decoration: InputDecoration(labelText: 'mot de passe'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -67,6 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   },
                 ),
                 SizedBox(height: 20),
+
                 TextFormField(
                   controller: _PPController,
                   decoration: InputDecoration(labelText: 'Url photo de profil sale pd'),
@@ -79,7 +92,15 @@ class _RegisterPageState extends State<RegisterPage> {
                 ), 
                 Padding(
                   padding: const EdgeInsets.only(top: 79),
-                  child: ElevatedButton(onPressed: (){Users controller}, child: Text("Envoyer")),
+                  child: ElevatedButton(onPressed: (){
+                    var encode = utf8.encode(_pswdController.text);
+                    var ash = sha256.convert(encode).toString();
+                    Users()
+                  .setName(_nameController.text)
+                  .setEmail(_emailController.text)
+                  .setPassword(ash)
+                  .setPhoto(_PPController.text)
+                  .insert();}, child: Text("Envoyer")),
                 )
               ],
             ),
@@ -89,3 +110,4 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 }
+

@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+import 'package:chevaldetroie/model/users.dart';
+import 'package:chevaldetroie/view/register.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 
 
@@ -46,6 +51,7 @@ class _FormPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
+                
                   controller: _pswdController,
                   decoration: InputDecoration(labelText: 'Mot de passe'),
                   validator: (value) {
@@ -58,11 +64,30 @@ class _FormPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.only(top: 79),
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Formulaire envoyé !')),
-                        );
+                        Users login = Users();
+                        await login.findFirstByField("email", _emailController.text);
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //   SnackBar(content: Text (login.getEmail())),
+                        // );
+                        if (login.getEmail() != ""){
+                          var encode = utf8.encode(_pswdController.text);
+                          var ash = sha256.convert(encode).toString();
+                          
+                          if (login.getPassword()==ash){
+                            Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RegisterPage()),
+                            );
+                          }
+                          if (login.getPassword()!=ash){
+                            ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("L'email ou le mot de passe est incorrect !")),
+                            );
+                          }
+                        }
                       }
                     },
                     child: Text('Connection'),
