@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'profiles/userProfile.dart';
+
 /// Flutter code sample for [DropdownButton].
 
 const List<String> list = <String>['kiwi', 'theo', 'tom', 'Four'];
@@ -12,10 +14,10 @@ class DropdownButtonApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(title: const Text('DropdownButton Sample')),
         body: const Center(
-          child: DropdownButtonExample(),
+          child: Userprofile(),
         ),
       ),
     );
