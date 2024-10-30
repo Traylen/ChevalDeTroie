@@ -114,6 +114,11 @@ class Horse {
     return list;
   }
 
+    Future<List<Map<String, dynamic>>> findAll() async {
+    List<Map<String, dynamic>> list = await Database().findAll(collection);
+    return list;
+  }
+
   void insert() {
     if(data.isEmpty) throw('Missing data');
       Database().add(collection, data);
