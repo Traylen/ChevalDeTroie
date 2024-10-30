@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 
 import 'package:chevaldetroie/model/users.dart';
@@ -22,6 +23,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -39,7 +41,9 @@ class _RegisterPageState extends State<RegisterPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
+
                   controller: _nameController,
+
                   decoration: InputDecoration(labelText: 'nom'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -50,7 +54,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
+
                   controller: _emailController,
+
                   decoration: InputDecoration(labelText: 'email'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -61,7 +67,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
+
                   controller: _pswdController,
+
                   decoration: InputDecoration(labelText: 'mot de passe'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -71,6 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   },
                 ),
                 SizedBox(height: 20),
+
                 TextFormField(
                   controller: _PPController,
                   decoration: InputDecoration(labelText: 'Url photo de profil sale pd'),
@@ -101,3 +110,4 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 }
+
