@@ -120,11 +120,11 @@ class _ConcourState extends State<Concour> {
                       );
                     }
                   },
-                  concour()
-                  .setName(_selectedName)
-                  .setAdresse(_adresseController)
-                  .setPicture()
-                  .setDate(_selectedDate)
+                  // concour()
+                  // .setName(_selectedName)
+                  // .setAdresse(_adresseController)
+                  // .setPicture()
+                  // .setDate(_selectedDate)
                   child: Text('Envoyer'),
                 ),
               ],

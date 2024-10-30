@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 import 'package:chevaldetroie/model/users.dart';
+import 'package:chevaldetroie/profiles/profileEdit.dart';
+import 'package:chevaldetroie/profiles/userProfile.dart';
 import 'package:chevaldetroie/view/register.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
-
 
 class LoginPage extends StatefulWidget {
   @override
@@ -15,11 +16,9 @@ final TextEditingController _emailController = TextEditingController();
 final TextEditingController _pswdController = TextEditingController();
 
 final List<String> _labelText = [
-    'Email',
-    'Password',
-  ];
-
-
+  'Email',
+  'Password',
+];
 
 class _FormPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
@@ -51,7 +50,6 @@ class _FormPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
-                
                   controller: _pswdController,
                   decoration: InputDecoration(labelText: 'Mot de passe'),
                   validator: (value) {
@@ -67,24 +65,28 @@ class _FormPageState extends State<LoginPage> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         Users login = Users();
-                        await login.findFirstByField("email", _emailController.text);
+                        await login.findFirstByField(
+                            "email", _emailController.text);
                         // ScaffoldMessenger.of(context).showSnackBar(
                         //   SnackBar(content: Text (login.getEmail())),
                         // );
-                        if (login.getEmail() != ""){
+                        if (login.getEmail() != "") {
                           var encode = utf8.encode(_pswdController.text);
                           var ash = sha256.convert(encode).toString();
-                          
-                          if (login.getPassword()==ash){
+
+                          if (login.getPassword() == ash) {
                             Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RegisterPage()),
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Userprofile(test: login.getId())),
                             );
                           }
-                          if (login.getPassword()!=ash){
+                          if (login.getPassword() != ash) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("L'email ou le mot de passe est incorrect !")),
+                              SnackBar(
+                                  content: Text(
+                                      "L'email ou le mot de passe est incorrect !")),
                             );
                           }
                         }

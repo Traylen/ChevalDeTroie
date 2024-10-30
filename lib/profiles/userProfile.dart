@@ -1,20 +1,41 @@
-import 'package:chevaldetroie/profiles/profileEdit.dart';
+import 'package:chevaldetroie/model/users.dart';
 import 'package:flutter/material.dart';
 import 'profileEdit.dart';
 
 class Userprofile extends StatefulWidget {
-  const Userprofile({super.key});
-
+  final test;
+  const Userprofile({super.key, required this.test});
   @override
   State<Userprofile> createState() => _UserprofileState();
 }
 
 class _UserprofileState extends State<Userprofile> {
+  Users? _user; // Nullable user to hold the fetched user data
+
+  @override
+  void initState() {
+    super.initState();
+    print(widget.test);
+    _fetchUserData(); // Fetch user data when the widget initializes
+  }
+
+  Future<void> _fetchUserData() async {
+    // Replace with the actual user ID you want to fetch
+    final userId = widget.test;
+    _user = await Users().findById(userId); // Fetch user by ID
+    setState(() {}); // Update the UI with the fetched user data
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (_user == null) {
+      // Show a loading indicator while fetching data
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           "Profile",
           style: TextStyle(
             color: Colors.white,
@@ -25,14 +46,12 @@ class _UserprofileState extends State<Userprofile> {
         backgroundColor: Colors.black,
       ),
       body: SingleChildScrollView(
-        // Rendre le corps défilable
         child: Column(
           children: [
-            const _TopPortion(), // Suppression de Expanded
-            const SizedBox(
-                height: 16), // Espace entre la partie bleue et la carte
-            const _HorseCard(), // Ajout de la carte avec l'image
-            const SizedBox(height: 16), // Espace avant la section des horaires
+            _TopPortion(user: _user!), // Pass the fetched user to _TopPortion
+            const SizedBox(height: 16),
+            const _HorseCard(),
+            const SizedBox(height: 16),
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
@@ -72,7 +91,7 @@ class _UserprofileState extends State<Userprofile> {
                 ),
               ],
             ),
-            const SizedBox(height: 16), // Espace en bas
+            const SizedBox(height: 16),
           ],
         ),
       ),
@@ -80,14 +99,11 @@ class _UserprofileState extends State<Userprofile> {
   }
 }
 
-class _TopPortion extends StatefulWidget {
-  const _TopPortion({Key? key}) : super(key: key);
+class _TopPortion extends StatelessWidget {
+  final Users user;
 
-  @override
-  State<_TopPortion> createState() => _TopPortionState();
-}
+  const _TopPortion({Key? key, required this.user}) : super(key: key);
 
-class _TopPortionState extends State<_TopPortion> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -106,7 +122,7 @@ class _TopPortionState extends State<_TopPortion> {
             ),
           ),
         ),
-        const Positioned(
+        Positioned(
           top: 40,
           left: 20,
           right: 20,
@@ -117,76 +133,70 @@ class _TopPortionState extends State<_TopPortion> {
                 children: [
                   CircleAvatar(
                     radius: 50,
-                    backgroundImage: NetworkImage(
-                      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-                    ),
+                    backgroundImage: NetworkImage(user.getPhoto()),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Name",
-                        style: TextStyle(
+                        user.getName(),
+                        style: const TextStyle(
                           fontSize: 28,
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 8),
-                      Text(
+                      const SizedBox(height: 8),
+                      const Text(
                         "Rider",
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.white70,
                         ),
                       ),
-                      SizedBox(height: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      const SizedBox(height: 12),
+                      Row(
                         children: [
-                          Row(
-                            children: [
-                              Icon(Icons.cake, color: Colors.white70, size: 20),
-                              SizedBox(width: 8),
-                              Text(
-                                "20 ans",
-                                style: TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
+                          const Icon(Icons.cake,
+                              color: Colors.white70, size: 20),
+                          const SizedBox(width: 8),
+                          Text(
+                            "${user.getAge()} ans",
+                            style: const TextStyle(
+                              color: Colors.white70,
+                              fontSize: 14,
+                            ),
                           ),
-                          SizedBox(height: 8),
-                          Row(
-                            children: [
-                              Icon(Icons.phone,
-                                  color: Colors.white70, size: 20),
-                              SizedBox(width: 8),
-                              Text(
-                                "+33 6 12 34 56 78",
-                                style: TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          const Icon(Icons.phone,
+                              color: Colors.white70, size: 20),
+                          const SizedBox(width: 8),
+                          Text(
+                            user.getPhone(),
+                            style: const TextStyle(
+                              color: Colors.white70,
+                              fontSize: 14,
+                            ),
                           ),
-                          SizedBox(height: 8),
-                          Row(
-                            children: [
-                              Icon(Icons.link, color: Colors.white70, size: 20),
-                              SizedBox(width: 8),
-                              Text(
-                                "Profile en ligne",
-                                style: TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 14,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            ],
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      const Row(
+                        children: [
+                          Icon(Icons.link, color: Colors.white70, size: 20),
+                          SizedBox(width: 8),
+                          Text(
+                            "Profile en ligne",
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 14,
+                              decoration: TextDecoration.underline,
+                            ),
                           ),
                         ],
                       ),
@@ -198,7 +208,7 @@ class _TopPortionState extends State<_TopPortion> {
           ),
         ),
         Positioned(
-          bottom: 10, // Positionnement au bas du conteneur bleu
+          bottom: 10,
           left: MediaQuery.of(context).size.width * 0.35,
           right: MediaQuery.of(context).size.width * 0.35,
           child: Container(
@@ -210,21 +220,16 @@ class _TopPortionState extends State<_TopPortion> {
             ),
             child: TextButton.icon(
               onPressed: () {
-                // page de modification`
-
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ProfileEdit()),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          ProfileEdit(kiwi: user.getId())), // Pass the user ID
                 );
               },
-              icon: const Icon(
-                Icons.edit,
-                color: Colors.black,
-              ),
-              label: const Text(
-                "Edit",
-                style: TextStyle(color: Colors.black, fontSize: 16),
-              ),
+              icon: const Icon(Icons.edit, color: Colors.black),
+              label: const Text("Edit",
+                  style: TextStyle(color: Colors.black, fontSize: 16)),
             ),
           ),
         ),
@@ -246,7 +251,7 @@ class _HorseCard extends StatelessWidget {
           ClipRRect(
               borderRadius: BorderRadius.circular(15.0),
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     image: DecorationImage(
                   image: NetworkImage("https://ecurie-active.fr/"),
                 )),
@@ -276,7 +281,7 @@ class _HorseCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 ElevatedButton(
                   onPressed: () {
-                    // acce page des chevaux
+                    // Navigate to horse page
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.yellow, // Couleur du bouton
