@@ -1,4 +1,6 @@
+import 'package:chevaldetroie/profiles/profileEdit.dart';
 import 'package:flutter/material.dart';
+import 'profileEdit.dart';
 
 class Userprofile extends StatefulWidget {
   const Userprofile({super.key});
@@ -78,9 +80,14 @@ class _UserprofileState extends State<Userprofile> {
   }
 }
 
-class _TopPortion extends StatelessWidget {
+class _TopPortion extends StatefulWidget {
   const _TopPortion({Key? key}) : super(key: key);
 
+  @override
+  State<_TopPortion> createState() => _TopPortionState();
+}
+
+class _TopPortionState extends State<_TopPortion> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -203,14 +210,19 @@ class _TopPortion extends StatelessWidget {
             ),
             child: TextButton.icon(
               onPressed: () {
-                // Action pour ouvrir la page de modification
+                // page de modification`
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProfileEdit()),
+                );
               },
               icon: const Icon(
                 Icons.edit,
                 color: Colors.black,
               ),
               label: const Text(
-                "Editer",
+                "Edit",
                 style: TextStyle(color: Colors.black, fontSize: 16),
               ),
             ),
@@ -232,19 +244,18 @@ class _HorseCard extends StatelessWidget {
       child: Stack(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(15.0),
-            child: Image.network(
-              "https://pxhere.com/fr/photo/981167",
-              height: 200,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
+              borderRadius: BorderRadius.circular(15.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                  image: NetworkImage("https://ecurie-active.fr/"),
+                )),
+              )),
           Container(
             height: 200,
             width: double.infinity,
             decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.10), // Ombre sombre
+              color: Colors.black.withOpacity(0.10),
               borderRadius: BorderRadius.circular(15.0),
             ),
           ),
@@ -265,7 +276,7 @@ class _HorseCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 ElevatedButton(
                   onPressed: () {
-                    // Action pour accéder à la page des chevaux
+                    // acce page des chevaux
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.yellow, // Couleur du bouton
