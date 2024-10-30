@@ -11,6 +11,8 @@ class _HorselessonState extends State<Horselesson> {
 
   String? _selectedOption1;
   String? _selectedOption2;
+  String? _selectedOption3;
+
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
 
@@ -22,6 +24,7 @@ class _HorselessonState extends State<Horselesson> {
     'Saut d’obstacle',
     'Endurance'
   ];
+  final List<String> _dropdownOptions3 = ['0:30', '1:00', '1:30', '2:00'];
 
   Future<void> _pickDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -109,6 +112,23 @@ class _HorselessonState extends State<Horselesson> {
                       value == null ? 'Veuillez choisir une option' : null,
                 ),
                 SizedBox(height: 20),
+                DropdownButtonFormField<String>(
+                  decoration: InputDecoration(labelText: 'Durée'),
+                  value: _selectedOption3,
+                  items: _dropdownOptions3.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (newValue) {
+                    setState(() {
+                      _selectedOption3 = newValue;
+                    });
+                  },
+                  validator: (value) =>
+                      value == null ? 'Veuillez choisir une option' : null,
+                ),
 
                 Row(
                   children: [
@@ -172,6 +192,12 @@ class _HorselessonState extends State<Horselesson> {
                       );
                     }
                   },
+                  // Lessons()
+                  // .setTerrain(_selectedOption1)
+                  // .setType(_selectedOption2)
+                  // .setDate(_selectedDate)
+                  // .setTime(_selectedTime)
+                  // .setDuree(_selectedOption3)
                   child: Text('Envoyer'),
                 ),
               ],

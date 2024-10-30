@@ -13,6 +13,8 @@ class _RavepartyState extends State<Raveparty> {
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
 
+  final TextEditingController _PPController = TextEditingController();
+
   final List<String> _dropdownOptions1 = ['Apéro', 'Repas'];
 
   // Date picker function
@@ -82,6 +84,7 @@ class _RavepartyState extends State<Raveparty> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
+                  controller: _PPController,
                   decoration: InputDecoration(labelText: 'URL de photo'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -156,6 +159,11 @@ class _RavepartyState extends State<Raveparty> {
                       );
                     }
                   },
+                  //  rave()
+                  //  .setTheme(_selectedOption1)
+                  //  .setPicture(_PPController)
+                  //  .setDate(_selectedDate)
+                  //  .setTime(_selectedTime)
                   child: Text('Envoyer'),
                 ),
               ],
