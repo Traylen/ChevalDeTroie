@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Concour extends StatefulWidget {
+  const Concour({super.key});
+
   @override
   _ConcourState createState() => _ConcourState();
 }
@@ -38,11 +40,11 @@ class _ConcourState extends State<Concour> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('concour'),
+        title: const Text('concour'),
       ),
       body: Center(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Form(
             key: _formKey,
             child: Column(
@@ -50,7 +52,7 @@ class _ConcourState extends State<Concour> {
               children: [
                 TextFormField(
                   controller: _nameController,
-                  decoration: InputDecoration(labelText: 'nom'),
+                  decoration: const InputDecoration(labelText: 'nom'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez remplir ce champ';
@@ -58,10 +60,10 @@ class _ConcourState extends State<Concour> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: _adresseController,
-                  decoration: InputDecoration(labelText: 'adresse'),
+                  decoration: const InputDecoration(labelText: 'adresse'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez remplir ce champ';
@@ -69,10 +71,10 @@ class _ConcourState extends State<Concour> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20), 
                 TextFormField(
                   controller: _PPController,
-                  decoration: InputDecoration(labelText: 'URL de photo'),
+                  decoration: const InputDecoration(labelText: 'URL de photo'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez remplir ce champ';
@@ -81,7 +83,7 @@ class _ConcourState extends State<Concour> {
                   },
                 ),
 
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // Date Picker
                 Row(
@@ -102,12 +104,12 @@ class _ConcourState extends State<Concour> {
                       ),
                     ),
                     IconButton(
-                      icon: Icon(Icons.calendar_today),
+                      icon: const Icon(Icons.calendar_today),
                       onPressed: () => _pickDate(context),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 ElevatedButton(
                   onPressed: () {
@@ -125,7 +127,7 @@ class _ConcourState extends State<Concour> {
                   .setAdresse(_adresseController)
                   .setPicture()
                   .setDate(_selectedDate)
-                  child: Text('Envoyer'),
+                  child: const Text('Envoyer'),
                 ),
               ],
             ),
