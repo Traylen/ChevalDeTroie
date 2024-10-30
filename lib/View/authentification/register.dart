@@ -1,6 +1,20 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-import '../home/homePage.dart';
+import 'package:chevaldetroie/model/users.dart';
+import 'package:flutter/material.dart';
+import 'package:crypto/crypto.dart';
+
+final TextEditingController _emailController = TextEditingController();
+final TextEditingController _pswdController = TextEditingController();
+final TextEditingController _nameController = TextEditingController();
+final TextEditingController _PPController = TextEditingController();
+
+final List<String> _labelText = [
+  'Name'
+      'Email',
+  'Password',
+  'PPUrl'
+];
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -43,6 +57,7 @@ class _RegisterState extends State<Register> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
+                  controller: _nameController,
                   decoration: InputDecoration(
                     labelText: 'Name',
                     enabledBorder: OutlineInputBorder(
@@ -65,6 +80,7 @@ class _RegisterState extends State<Register> {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
+                    controller: _emailController,
                     decoration: InputDecoration(
                       labelText: 'Email',
                       enabledBorder: OutlineInputBorder(
@@ -82,6 +98,7 @@ class _RegisterState extends State<Register> {
                 const SizedBox(height: 20),
                 TextFormField(
                   obscureText: true,
+                  controller: _pswdController,
                   decoration: InputDecoration(
                     labelText: 'Password',
                     enabledBorder: OutlineInputBorder(
@@ -103,10 +120,16 @@ class _RegisterState extends State<Register> {
                   },
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton.icon(
-                  onPressed: () async {},
-                  icon: const Icon(Icons.upload_file),
-                  label: const Text('Télécharger une image'),
+                TextFormField(
+                  controller: _PPController,
+                  decoration: const InputDecoration(
+                      labelText: 'Url photo de profil sale pd'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Veuillez remplir ce champ';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
@@ -117,16 +140,14 @@ class _RegisterState extends State<Register> {
                         const EdgeInsets.symmetric(horizontal: 44)),
                   ),
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Formulaire envoyé !')),
-                      );
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomePage()),
-                      );
-                    }
+                    var encode = utf8.encode(_pswdController.text);
+                    var ash = sha256.convert(encode).toString();
+                    Users()
+                        .setName(_nameController.text)
+                        .setEmail(_emailController.text)
+                        .setPassword(ash)
+                        .setPhoto(_PPController.text)
+                        .insert();
                   },
                   child: const Text('Register'),
                 ),

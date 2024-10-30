@@ -71,7 +71,7 @@ class _ConcourState extends State<Concour> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 20), 
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: _PPController,
                   decoration: const InputDecoration(labelText: 'URL de photo'),
@@ -122,11 +122,11 @@ class _ConcourState extends State<Concour> {
                       );
                     }
                   },
-                  concour()
-                  .setName(_selectedName)
-                  .setAdresse(_adresseController)
-                  .setPicture()
-                  .setDate(_selectedDate)
+                  // concour()
+                  // .setName(_selectedName)
+                  // .setAdresse(_adresseController)
+                  // .setPicture()
+                  // .setDate(_selectedDate)
                   child: const Text('Envoyer'),
                 ),
               ],
