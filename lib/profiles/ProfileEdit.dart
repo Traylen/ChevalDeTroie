@@ -21,12 +21,13 @@ class _ProfileEditState extends State<ProfileEdit> {
     _loadUserData();
   }
 
-  // Load user data from the database
+  //Load user data from the database
+
   Future<void> _loadUserData() async {
-    // Users user = await Users().findById(widget.test);
-    // _nameController.text = user.getName();
-    // _ageController.text = user.getAge().toString();
-    // _phoneController.text = user.getPhone();
+    Users user = await Users().findById(widget.kiwi);
+    _nameController.text = user.getName();
+    _ageController.text = user.getAge().toString();
+    _phoneController.text = user.getPhone();
   }
 
   // Update user information in the database

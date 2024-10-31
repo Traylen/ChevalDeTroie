@@ -1,4 +1,4 @@
-import 'package:chevaldetroie/model/courses.dart';
+//import 'package:chevaldetroie/model/courses.dart';
 import 'package:chevaldetroie/profiles/userProfile.dart';
 import 'package:chevaldetroie/view/home/calendar.dart';
 import 'package:chevaldetroie/view/home/createForm.dart';
@@ -19,7 +19,9 @@ class _HomePageState extends State<HomePage> {
     const Home2(),
     const Calendar(),
     const ChooseFormPage(),
-    const Userprofile(),
+    const Userprofile(
+      test: null,
+    ),
   ];
 
   @override
@@ -71,19 +73,20 @@ class _Home2State extends State<Home2> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    TextButton(
-                        onPressed: () async {
-                          Courses users = Courses();
-                          await users.getAllCourses();
-                        },
-                        child: const Text("Test")),
-                    const Text("John Doe"),
-                    const CircleAvatar(
-                      backgroundImage: NetworkImage(""),
-                    )
-                  ]),
+                mainAxisAlignment: MainAxisAlignment.end,
+                //children: <Widget>[
+                //   TextButton(
+                //       // onPressed: () async {
+                //       //   Courses users = Courses();
+                //       //   await users.getAllCourses();
+                //       // },
+                //       child: const Text("Test")),
+                //   const Text("John Doe"),
+                //   const CircleAvatar(
+                //     backgroundImage: NetworkImage(""),
+                //   )
+                // ]
+              ),
             ),
             // const SearchBar(
             //   leading: Icon(Icons.search),

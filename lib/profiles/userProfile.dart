@@ -1,6 +1,8 @@
 import 'package:chevaldetroie/model/users.dart';
 import 'package:flutter/material.dart';
 import 'profileEdit.dart';
+import 'horseManagement/myHorsesPage.dart';
+import '../view/login.dart';
 
 class Userprofile extends StatefulWidget {
   final test;
@@ -24,6 +26,17 @@ class _UserprofileState extends State<Userprofile> {
     final userId = widget.test;
     _user = await Users().findById(userId); // Fetch user by ID
     setState(() {}); // Update the UI with the fetched user data
+  }
+
+  void _logout() {
+    // Logique de déconnexion
+    // Vous pouvez également supprimer les données de session ou utiliser un package de gestion de l'état
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              LoginPage()), // Remplacez par votre page de connexion
+    );
   }
 
   @override
@@ -50,7 +63,7 @@ class _UserprofileState extends State<Userprofile> {
           children: [
             _TopPortion(user: _user!), // Pass the fetched user to _TopPortion
             const SizedBox(height: 16),
-            const _HorseCard(),
+            _HorseCard(user: _user!),
             const SizedBox(height: 16),
             const Padding(
               padding: EdgeInsets.all(8.0),
@@ -240,7 +253,8 @@ class _TopPortion extends StatelessWidget {
 
 // Classe pour la carte des chevaux
 class _HorseCard extends StatelessWidget {
-  const _HorseCard({Key? key}) : super(key: key);
+  final Users user;
+  const _HorseCard({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -249,13 +263,17 @@ class _HorseCard extends StatelessWidget {
       child: Stack(
         children: [
           ClipRRect(
-              borderRadius: BorderRadius.circular(15.0),
-              child: Container(
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
+            borderRadius: BorderRadius.circular(15.0),
+            child: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
                   image: NetworkImage("https://ecurie-active.fr/"),
-                )),
-              )),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              height: 200,
+            ),
+          ),
           Container(
             height: 200,
             width: double.infinity,
@@ -281,16 +299,22 @@ class _HorseCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 ElevatedButton(
                   onPressed: () {
-                    // Navigate to horse page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HorsesPage(
+                                user: user,
+                              )),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.yellow, // Couleur du bouton
+                    backgroundColor: Colors.yellow,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                   child: const Text(
-                    "Voir mes chevaux",
+                    "Voir les chevaux",
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
