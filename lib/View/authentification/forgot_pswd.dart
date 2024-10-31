@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:chevaldetroie/model/users.dart';
+import 'package:chevaldetroie/view/home/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto/crypto.dart';
 
@@ -138,20 +139,18 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             var encode = utf8.encode(_confirmpswdController.text);
                             var ash = sha256.convert(encode).toString();
 
-                            if (login.getPassword() == ash) {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const HomePage()),
-                              );
-                            }
-                            if (login.getPassword() != ash) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text(
-                                        "L'email ou le mot de passe est incorrect !")),
-                              );
-                            }
+                            Users()
+                          .setEmail(_emailController.text)
+                          .setPassword(ash)
+                          .insert();
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomePage()),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Votre mot de passe à bien été modifié")),
+                            );
                           }
                       }
                     }
