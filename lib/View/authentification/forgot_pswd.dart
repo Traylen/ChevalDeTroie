@@ -9,7 +9,6 @@ final TextEditingController _emailController = TextEditingController();
 final TextEditingController _pswdController = TextEditingController();
 final TextEditingController _confirmpswdController = TextEditingController();
 
-
 final List<String> _labelText = [
   'Name'
       'Email',
@@ -130,14 +129,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         const EdgeInsets.symmetric(horizontal: 44)),
                   ),
                   onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        Users login = Users();
-                        await login.findFirstByField(
-                            "email", _emailController.text);
-                        if (_pswdController.text==_confirmpswdController.text){
-                          if (login.getEmail() != "") {
-                            var encode = utf8.encode(_confirmpswdController.text);
-                            var ash = sha256.convert(encode).toString();
+                    if (_formKey.currentState!.validate()) {
+                      Users login = Users();
+                      await login.findFirstByField(
+                          "email", _emailController.text);
+                      if (_pswdController.text == _confirmpswdController.text) {
+                        if (login.getEmail() != "") {
+                          var encode = utf8.encode(_confirmpswdController.text);
+                          var ash = sha256.convert(encode).toString();
 
                             Users()
                           .setEmail(_emailController.text)
@@ -150,8 +149,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             );
                             ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text("Votre mot de passe à bien été modifié")),
+
                             );
                           }
+                        }
                       }
                     }
                   },

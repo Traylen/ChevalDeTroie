@@ -1,63 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:chevaldetroie/model/rave.dart';
 
-class RaveValidationPage extends StatefulWidget {
-  final String raveId;
-
-  RaveValidationPage({required this.raveId});
-
+class AdminPage extends StatefulWidget {
   @override
-  _RaveValidationPageState createState() => _RaveValidationPageState();
+  _AdminPageState createState() => _AdminPageState();
 }
 
-class _RaveValidationPageState extends State<RaveValidationPage> {
-  Rave _rave = Rave();
-  bool isLoading = true;
-  bool? isValidated;
-  String? errorMessage;
+class _AdminPageState extends State<AdminPage> {
+  List<Rave> _unvalidatedRaves = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _loadRaveData();
+    _loadUnvalidatedRaves();
   }
 
-  Future<void> _loadRaveData() async {
+  // Fonction pour charger les raves non validées
+  Future<void> _loadUnvalidatedRaves() async {
+    setState(() {
+      _isLoading = true;
+    });
     try {
-      await _rave.findById(widget.raveId);
+      List<Rave> raves = await Rave().findUnvalidatedRaves();
       setState(() {
-        isValidated = _rave.getValidate();
-        isLoading = false;
+        _unvalidatedRaves = raves;
+        _isLoading = false;
       });
     } catch (e) {
-      print('Erreur lors du chargement des données : $e');
+      print('Erreur lors du chargement des raves non validées : $e');
       setState(() {
-        errorMessage = 'Erreur lors du chargement des données.';
-        isLoading = false;
+        _isLoading = false;
       });
     }
   }
 
-  Future<void> _toggleValidation() async {
+  Future<void> _toggleValidation(Rave rave) async {
     setState(() {
-      isLoading = true;
+      _isLoading = true;
     });
-
     try {
-      bool newValidationState = !isValidated!;
-      _rave.setValidate(newValidationState);
-      await _rave.update();
-      setState(() {
-        isValidated = newValidationState;
-      });
+      rave.setValidate(true);
+      await rave.update();
+      _loadUnvalidatedRaves();
     } catch (e) {
       print('Erreur lors de la mise à jour de la validation : $e');
-      setState(() {
-        errorMessage = 'Erreur lors de la mise à jour de la validation.';
-      });
     } finally {
       setState(() {
-        isLoading = false;
+        _isLoading = false;
       });
     }
   }
@@ -66,42 +56,27 @@ class _RaveValidationPageState extends State<RaveValidationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Validation Rave"),
+        title: Text('Admin - Valider les raves'),
       ),
-      body: Center(
-        child: isLoading
-            ? CircularProgressIndicator()
-            : errorMessage != null
-                ? Text(
-                    errorMessage!,
-                    style: TextStyle(color: Colors.red, fontSize: 18),
-                    textAlign: TextAlign.center,
-                  )
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Thème: ${_rave.getTheme()}",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        "Validation: ${isValidated! ? "Validé" : "Non validé"}",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: isValidated! ? Colors.green : Colors.red,
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: _toggleValidation,
-                        child: Text(
-                          isValidated! ? "Annuler la validation" : "Valider",
-                        ),
-                      ),
-                    ],
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: _unvalidatedRaves.length,
+              itemBuilder: (context, index) {
+                Rave rave = _unvalidatedRaves[index];
+                return Card(
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  child: ListTile(
+                    title: Text("Thème: ${rave.getTheme()}"),
+                    subtitle: Text("Date: ${rave.getDate()}"),
+                    trailing: ElevatedButton(
+                      onPressed: () => _toggleValidation(rave),
+                      child: Text("Valider"),
+                    ),
                   ),
-      ),
+                );
+              },
+            ),
     );
   }
 }
