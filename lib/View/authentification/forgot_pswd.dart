@@ -1,31 +1,24 @@
 import 'dart:convert';
-
 import 'package:chevaldetroie/model/users.dart';
 import 'package:chevaldetroie/view/home/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto/crypto.dart';
-
 final TextEditingController _emailController = TextEditingController();
 final TextEditingController _pswdController = TextEditingController();
 final TextEditingController _confirmpswdController = TextEditingController();
-
 final List<String> _labelText = [
   'Name'
       'Email',
   'Password',
   'PPUrl'
 ];
-
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
-
   @override
   _ForgotPasswordState createState() => _ForgotPasswordState();
 }
-
 class _ForgotPasswordState extends State<ForgotPassword> {
   final _formKey = GlobalKey<FormState>();
-
   String? validEmail(value) {
     const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'"
         r'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
@@ -39,7 +32,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         ? 'Enter valid Email Please'
         : null;
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,7 +121,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         const EdgeInsets.symmetric(horizontal: 44)),
                   ),
                   onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
+                      if (_formKey.currentState!.validate()) {
                       Users login = Users();
                       await login.findFirstByField(
                           "email", _emailController.text);
@@ -137,7 +129,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         if (login.getEmail() != "") {
                           var encode = utf8.encode(_confirmpswdController.text);
                           var ash = sha256.convert(encode).toString();
-
+                          if (login.getPassword()==ash){
                             Users()
                           .setEmail(_emailController.text)
                           .setPassword(ash)
@@ -152,9 +144,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
                             );
                           }
+                          }
                         }
                       }
-                    }
                   },
                   child: const Text('Changer'),
                 ),
