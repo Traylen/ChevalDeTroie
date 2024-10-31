@@ -7,6 +7,7 @@ import 'package:mongo_dart/mongo_dart.dart';
 class Users {
   final String collection = "user";
   Map<String, dynamic> data = <String, dynamic>{
+    'id': '',
     'name': '',
     'email': '',
     'password': '',
@@ -123,6 +124,10 @@ class Users {
         await Database().findByField(collection, field, value);
     return list;
   }
+
+  // Future<void> editProfile(id, field) async {
+  //   await Database().updateOne(collection, id, field);
+  // }
 
   void insert() {
     if (data.isEmpty) throw ('Missing data');

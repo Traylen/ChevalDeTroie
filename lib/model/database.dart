@@ -1,11 +1,25 @@
 import 'package:mongo_dart/mongo_dart.dart';
 
 class Database {
-  Db db = Db('mongodb://10.0.2.2:27017/flutter');
+  //Db db = Db('mongodb://10.0.2.2:27017/flutter');
+
+  Db db = Db('mongodb://127.0.0.1:27017/flutter');
 
   void add(String collection, Map<String, dynamic> data) async {
     await db.open();
     await db.collection(collection).insert(data);
+    await db.close();
+  }
+
+  Future<void> update(String collection, ObjectId id, String name, String age,
+      String phone) async {
+    // var db = await Db.create(
+    //     "mongodb://127.0.0.1:27017/chevaldetroie"); // Modifier si nécessaire
+    await db.open();
+    var coll = db.collection(collection);
+
+    await coll.updateOne(where.id(id),
+        modify.set("name", name).set("age", age).set("phone", phone));
     await db.close();
   }
 
