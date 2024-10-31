@@ -1,4 +1,5 @@
 import 'package:chevaldetroie/model/concour.dart';
+import 'package:chevaldetroie/model/lesson.dart';
 import 'package:chevaldetroie/model/rave.dart';
 import 'package:chevaldetroie/model/users.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,13 @@ class Description extends StatefulWidget {
   final id;
   final id_user;
   final type;
+  final data;
   const Description(
-      {super.key, required this.id, required this.id_user, required this.type});
+      {super.key,
+      required this.id,
+      required this.id_user,
+      required this.type,
+      this.data});
 
   @override
   State<Description> createState() => _DescriptionState();
@@ -17,6 +23,7 @@ class Description extends StatefulWidget {
 
 Rave rave = Rave();
 Competition competition = Competition();
+Lessons lessons = Lessons();
 Users user = Users();
 final TextEditingController _messageController = TextEditingController();
 
@@ -41,9 +48,12 @@ class _DescriptionState extends State<Description> {
                         if (widget.type == "rave") {
                           rave.edtiRave(
                               widget.id, widget.id_user, "participants");
-                        } else {
+                        } else if (widget.type == "competition") {
                           // ajouter un ici la request
                           competition.edtiRave(
+                              widget.id, widget.id_user, "participants");
+                        } else {
+                          lessons.edtiRave(
                               widget.id, widget.id_user, "participants");
                         }
                       });
@@ -68,7 +78,9 @@ class _DescriptionState extends State<Description> {
             FutureBuilder(
                 future: widget.type == "rave"
                     ? rave.findById(widget.id)
-                    : competition.findById(widget.id),
+                    : widget.type == "competition"
+                        ? competition.findById(widget.id)
+                        : lessons.findById(widget.id),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -78,8 +90,10 @@ class _DescriptionState extends State<Description> {
                     dynamic data;
                     if (widget.type == "rave") {
                       data = snapshot.data! as Rave;
-                    } else {
+                    } else if (widget.type == "competition") {
                       data = snapshot.data! as Competition;
+                    } else {
+                      data = snapshot.data! as Lessons;
                     }
                     var participants = data.getParticipants() ?? "none";
                     return SizedBox(

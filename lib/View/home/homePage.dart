@@ -79,7 +79,7 @@ Users user = Users();
 // var test = lessons.getAll().then((result) => print(result));
 
 var allFilters = lessons.getAll();
-var allFilte = "rave";
+var allFilte = "lessons";
 void filter(filters, stringFilter) {
   allFilters = filters;
   allFilte = stringFilter;
@@ -192,8 +192,6 @@ class _Home2State extends State<Home2> {
                           return GestureDetector(
                             onTap: () => {
                               setState(() {
-                                print(allFilte);
-                                print("bonjour tout le monde");
                                 allFilte == "rave"
                                     ? Navigator.push(
                                         context,
@@ -204,15 +202,27 @@ class _Home2State extends State<Home2> {
                                                   type: "rave",
                                                 )),
                                       )
-                                    : Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Description(
-                                                  id: data[index]["_id"],
-                                                  id_user: widget.username,
-                                                  type: "competition",
-                                                )),
-                                      );
+                                    : allFilte == "competition"
+                                        ? Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Description(
+                                                      id: data[index]["_id"],
+                                                      id_user: widget.username,
+                                                      type: "competition",
+                                                    )),
+                                          )
+                                        : Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Description(
+                                                      id: data[index]["_id"],
+                                                      id_user: widget.username,
+                                                      type: "lessons",
+                                                    )),
+                                          );
                               })
                             },
                             child: Padding(
