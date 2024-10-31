@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:chevaldetroie/model/horse.dart';
 import 'package:chevaldetroie/model/users.dart';
 import 'addHorse.dart';
+import 'editHorse.dart';
 
 class HorsesPage extends StatefulWidget {
   final Users user;
@@ -22,9 +23,8 @@ class _HorsesPageState extends State<HorsesPage> {
   }
 
   Future<void> _fetchHorses() async {
-    // Fetch all horses where the owner is the current user
-    List<Map<String, dynamic>> horsesData =
-        await Horse().findAllByField('owner', widget.user.getId());
+    // Fetch all horses from the database
+    List<Map<String, dynamic>> horsesData = await Horse().findAll();
     allHorses = horsesData.map((data) => Horse()..data = data).toList();
     setState(() {});
   }
@@ -39,8 +39,8 @@ class _HorsesPageState extends State<HorsesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Horses', style: TextStyle(fontSize: 24)),
-        backgroundColor: Colors.black,
+        title: const Text('All Horses', style: TextStyle(fontSize: 24)),
+        backgroundColor: Colors.yellow,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -54,6 +54,7 @@ class _HorsesPageState extends State<HorsesPage> {
                   return _HorseCard(
                     horse: horse,
                     onTakeAsDp: () => _updateDpHorse(horse.getId() as String),
+                    user: widget.user,
                   );
                 }).toList(),
               ),
@@ -87,15 +88,19 @@ class _HorsesPageState extends State<HorsesPage> {
 class _HorseCard extends StatelessWidget {
   final Horse horse;
   final VoidCallback onTakeAsDp;
+  final Users user;
 
   const _HorseCard({
     Key? key,
     required this.horse,
     required this.onTakeAsDp,
+    required this.user,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bool isOwner = horse.getOwner() == user.getId();
+
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       child: Padding(
@@ -105,12 +110,13 @@ class _HorseCard extends StatelessWidget {
             // Horse photo
             ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
-              // child: Image.network(
-              //   horse.getPhoto(),
-              //   height: 100,
-              //   width: 100,
-              //   fit: BoxFit.cover,
-              // ),
+              //Uncomment the below line and provide a proper URL for the image
+              child: Image.network(
+                horse.getPhoto(),
+                height: 100,
+                width: 100,
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(width: 16),
             // Horse details
@@ -133,17 +139,36 @@ class _HorseCard extends StatelessWidget {
                 ],
               ),
             ),
-            // Button to set this horse as DP
-            ElevatedButton(
-              onPressed: onTakeAsDp,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.yellow,
-              ),
-              child: const Text(
-                'Take as my DP',
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
+            // Button to set this horse as DP or edit
+            isOwner
+                ? ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HorseEditPage(horse: horse),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          Colors.yellow, // Different color for edit
+                    ),
+                    child: const Text(
+                      'Edit Horse',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  )
+                : ElevatedButton(
+                    onPressed: onTakeAsDp,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.yellow,
+                    ),
+                    child: const Text(
+                      'Take as my DP',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
           ],
         ),
       ),

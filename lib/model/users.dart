@@ -125,6 +125,10 @@ class Users {
     return list;
   }
 
+  // Future<void> editProfile(id, field) async {
+  //   await Database().updateOne(collection, id, field);
+  // }
+
   void insert() {
     if (data.isEmpty) throw ('Missing data');
     Database().add(collection, data);

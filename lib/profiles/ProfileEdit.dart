@@ -32,16 +32,25 @@ class _ProfileEditState extends State<ProfileEdit> {
 
   // Update user information in the database
   Future<void> _updateUserData() async {
-    Users user = Users()
-      ..setName(_nameController.text)
-      ..setAge(int.tryParse(_ageController.text) ?? 0)
-      ..setPhone(_phoneController.text);
+    Database user = Database();
+    // ..setName(_nameController.text)
+    // ..setAge(int.tryParse(_ageController.text) ?? 0)
+    // ..setPhone(_phoneController.text);
 
-    Database().add(user.collection, user.data); // Save changes
+    await user.update("user", widget.kiwi, _nameController.text,
+        _ageController.text, _phoneController.text); // Mise à jour avec l'ID
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text("Modifications sauvegardées !")),
     );
-    Navigator.pop(context); // Return to the previous screen
+    Navigator.pop(context); // Retour à l'écran précédent
+    // Assurez-vous que l'utilisateur possède un ID pour la mise à jour
+    if (widget.kiwi != null) {
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text("Échec de la sauvegarde des modifications.")),
+      );
+    }
   }
 
   @override
