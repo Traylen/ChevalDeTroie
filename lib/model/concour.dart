@@ -8,6 +8,7 @@ class Competition {
     'adresse': '',
     'pp': '',
     'date': '',
+    'participants': []
   };
 
   Competition setName(String name) {
@@ -50,6 +51,14 @@ class Competition {
     return data['date'];
   }
 
+  getParticipants() {
+    return data['participants'];
+  }
+
+  int getLengthParticipants() {
+    return data['participants'].length;
+  }
+
   Future<Competition> findById(id) async {
     var currentObjectId = id is String ? ObjectId.fromHexString(id) : id;
     List<Map<String, dynamic>> list =
@@ -70,6 +79,15 @@ class Competition {
     List<Map<String, dynamic>> list =
         await Database().findByField(collection, field, value);
     return list;
+  }
+
+  Future<List<Map<String, dynamic>>> getAll() async {
+    List<Map<String, dynamic>> list = await Database().findAll(collection);
+    return list;
+  }
+
+  Future<void> edtiRave(id, participant, field) async {
+    await Database().updateOne(collection, id, participant, field);
   }
 
   void insert() {

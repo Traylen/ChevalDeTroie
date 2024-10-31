@@ -84,7 +84,7 @@ class Users {
     return data[''];
   }
 
-  String getAge() {
+  int getAge() {
     return data['age'];
   }
 

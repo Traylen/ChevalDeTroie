@@ -18,17 +18,8 @@ class Database {
     await db.open();
     var coll = db.collection(collection);
 
-    // Mise à jour des données par ID
     await coll.updateOne(where.id(id),
-        modify.set("name", name).set("age", age).set("phone", phone)
-        // .set("age", data['age'])
-        // .set("phone", data['phone'])
-        // .set("email", data['email'])
-        // .set("role", data['role'])
-        // .set("photo", data['photo'])
-        // .set("ffe_url", data['ffe_url'])
-        // .set("dp", data['dp']),
-        );
+        modify.set("name", name).set("age", age).set("phone", phone));
     await db.close();
   }
 
@@ -44,18 +35,22 @@ class Database {
   // trust me (kiwi)
   Future<List<Map<String, dynamic>>> findAll(collection) async {
     await db.open();
-    var output = await db.collection(collection).find().toList();
+    var output =
+        await db.collection(collection).find({"validate": "True"}).toList();
     await db.close();
     return output;
   }
 
-  // update One
-  // Future<void> updateOne(collection, id, field) async {
-  //   await db.open();
-  //   var output =
-  //       await db.collection(collection).updateOne();
-  //   await db.close();
-  // }
+  Future<void> updateOne(collection, id, participant, field) async {
+    await db.open();
+    var output = await db.collection(collection).updateOne(
+        where.id(id),
+        {
+          '\$push': {field: participant}
+        },
+        upsert: true);
+    await db.close();
+  }
 
   DbCollection collection(String collection) {
     return db.collection(collection);

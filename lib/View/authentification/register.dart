@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:chevaldetroie/model/users.dart';
+import 'package:chevaldetroie/view/authentification/login.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto/crypto.dart';
 
@@ -24,6 +25,14 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _pswdController.dispose();
+    _nameController.dispose();
+    super.dispose();
+  }
+
   final _formKey = GlobalKey<FormState>();
 
   String? validEmail(value) {
@@ -122,8 +131,18 @@ class _RegisterState extends State<Register> {
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _PPController,
-                  decoration: const InputDecoration(
-                      labelText: 'Url photo de profil sale pd'),
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(
+                            color: Color(0xFFa1a1a1),
+                          )),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(
+                            color: Color(0xFF396ce7),
+                          )),
+                      labelText: 'Url photo de profil'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez remplir ce champ';
@@ -134,8 +153,13 @@ class _RegisterState extends State<Register> {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   style: ButtonStyle(
-                    // minimumSize: ,
-                    minimumSize: WidgetStateProperty.all(const Size(200, 40)),
+                    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    )),
+                    backgroundColor:
+                        const WidgetStatePropertyAll(Color(0xff0263e0)),
+                    minimumSize: WidgetStateProperty.all(const Size(380, 45)),
                     padding: WidgetStateProperty.all<EdgeInsets>(
                         const EdgeInsets.symmetric(horizontal: 44)),
                   ),
@@ -148,8 +172,13 @@ class _RegisterState extends State<Register> {
                         .setPassword(ash)
                         .setPhoto(_PPController.text)
                         .insert();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const FormPage()),
+                    );
                   },
-                  child: const Text('Register'),
+                  child: const Text('Register',
+                      style: TextStyle(color: Colors.white)),
                 ),
               ],
             ),
