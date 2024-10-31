@@ -86,6 +86,16 @@ class Rave {
     }
   }
 
+  Future<List<Rave>> findUnvalidatedRaves() async {
+    List<Map<String, dynamic>> list =
+        await Database().findByField(collection, 'validate', false);
+    return list.map((data) {
+      Rave rave = Rave();
+      rave.data = data;
+      return rave;
+    }).toList();
+  }
+
   Future<void> insert() async {
     if (data.values.any((value) => value == '')) {
       throw ('Données incomplètes : tous les champs doivent être remplis avant l\'insertion');
