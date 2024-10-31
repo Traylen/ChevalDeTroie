@@ -79,8 +79,10 @@ Users user = Users();
 // var test = lessons.getAll().then((result) => print(result));
 
 var allFilters = lessons.getAll();
-void filter(filters) {
+var allFilte = "rave";
+void filter(filters, stringFilter) {
   allFilters = filters;
+  allFilte = stringFilter;
 }
 
 class _Home2State extends State<Home2> {
@@ -149,21 +151,21 @@ class _Home2State extends State<Home2> {
                   TextButton(
                       onPressed: () {
                         setState(() {
-                          filter(lessons.getAll());
+                          filter(lessons.getAll(), "lessons");
                         });
                       },
                       child: const Text("Lesson")),
                   TextButton(
                       onPressed: () {
                         setState(() {
-                          filter(raveParty.getAll());
+                          filter(raveParty.getAll(), "rave");
                         });
                       },
                       child: const Text("RaveParty")),
                   TextButton(
                       onPressed: () {
                         setState(() {
-                          filter(competition.getAll());
+                          filter(competition.getAll(), "competition");
                         });
                       },
                       child: const Text("Competition")),
@@ -190,14 +192,27 @@ class _Home2State extends State<Home2> {
                           return GestureDetector(
                             onTap: () => {
                               setState(() {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Description(
-                                            id: data[index]["_id"],
-                                            id_user: widget.username,
-                                          )),
-                                );
+                                print(allFilte);
+                                print("bonjour tout le monde");
+                                allFilte == "rave"
+                                    ? Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Description(
+                                                  id: data[index]["_id"],
+                                                  id_user: widget.username,
+                                                  type: "rave",
+                                                )),
+                                      )
+                                    : Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Description(
+                                                  id: data[index]["_id"],
+                                                  id_user: widget.username,
+                                                  type: "competition",
+                                                )),
+                                      );
                               })
                             },
                             child: Padding(
