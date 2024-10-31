@@ -1,6 +1,5 @@
-import 'package:chevaldetroie/profiles/profileEdit.dart';
+import 'package:chevaldetroie/profiles/ProfileEdit.dart';
 import 'package:flutter/material.dart';
-import 'profileEdit.dart';
 
 class Userprofile extends StatefulWidget {
   const Userprofile({super.key});

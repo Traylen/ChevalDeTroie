@@ -4,6 +4,7 @@ import 'package:chevaldetroie/model/rave.dart';
 import 'package:chevaldetroie/view/admin.dart';
 import 'package:chevaldetroie/view/concour.dart';
 import 'package:chevaldetroie/view/horseLesson.dart';
+import 'package:chevaldetroie/view/authentification/login.dart';
 import 'package:chevaldetroie/view/login.dart';
 import 'package:chevaldetroie/view/raveParty.dart';
 import 'package:chevaldetroie/view/register.dart';
@@ -13,8 +14,6 @@ import 'package:chevaldetroie/model/users.dart';
 
 import 'package:flutter/material.dart';
 
-import 'View/home/homePage.dart';
-import 'View/authentification/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,6 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
         debugShowCheckedModeBanner: false,
         title: 'Cheval De Troie',
         theme: ThemeData(

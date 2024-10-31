@@ -6,8 +6,8 @@ import 'package:crypto/crypto.dart';
 
 final TextEditingController _emailController = TextEditingController();
 final TextEditingController _pswdController = TextEditingController();
-final TextEditingController _nameController = TextEditingController();
-final TextEditingController _PPController = TextEditingController();
+final TextEditingController _confirmpswdController = TextEditingController();
+
 
 final List<String> _labelText = [
   'Name'
@@ -16,14 +16,14 @@ final List<String> _labelText = [
   'PPUrl'
 ];
 
-class Register extends StatefulWidget {
-  const Register({super.key});
+class ForgotPassword extends StatefulWidget {
+  const ForgotPassword({super.key});
 
   @override
-  _RegisterState createState() => _RegisterState();
+  _ForgotPasswordState createState() => _ForgotPasswordState();
 }
 
-class _RegisterState extends State<Register> {
+class _ForgotPasswordState extends State<ForgotPassword> {
   final _formKey = GlobalKey<FormState>();
 
   String? validEmail(value) {
@@ -56,28 +56,6 @@ class _RegisterState extends State<Register> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextFormField(
-                  controller: _nameController,
-                  decoration: InputDecoration(
-                    labelText: 'Name',
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: Color(0xFFa1a1a1),
-                        )),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: Color(0xFF396ce7),
-                        )),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Veuillez remplir ce champ';
-                    }
-                    return null;
-                  },
-                ),
                 const SizedBox(height: 20),
                 TextFormField(
                     controller: _emailController,
@@ -119,13 +97,24 @@ class _RegisterState extends State<Register> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 20),
                 TextFormField(
-                  controller: _PPController,
-                  decoration: const InputDecoration(
-                      labelText: 'Url photo de profil sale pd'),
+                  obscureText: true,
+                  controller: _confirmpswdController,
+                  decoration: InputDecoration(
+                    labelText: 'Confirm your Password',
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(
+                          color: Color(0xFFa1a1a1),
+                        )),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(
+                          color: Color(0xFF396ce7),
+                        )),
+                  ),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value == null || value.isEmpty && value.length < 5) {
                       return 'Veuillez remplir ce champ';
                     }
                     return null;
@@ -139,17 +128,35 @@ class _RegisterState extends State<Register> {
                     padding: WidgetStateProperty.all<EdgeInsets>(
                         const EdgeInsets.symmetric(horizontal: 44)),
                   ),
-                  onPressed: () {
-                    var encode = utf8.encode(_pswdController.text);
-                    var ash = sha256.convert(encode).toString();
-                    Users()
-                        .setName(_nameController.text)
-                        .setEmail(_emailController.text)
-                        .setPassword(ash)
-                        .setPhoto(_PPController.text)
-                        .insert();
+                  onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        Users login = Users();
+                        await login.findFirstByField(
+                            "email", _emailController.text);
+                        if (_pswdController.text==_confirmpswdController.text){
+                          if (login.getEmail() != "") {
+                            var encode = utf8.encode(_confirmpswdController.text);
+                            var ash = sha256.convert(encode).toString();
+
+                            if (login.getPassword() == ash) {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const HomePage()),
+                              );
+                            }
+                            if (login.getPassword() != ash) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text(
+                                        "L'email ou le mot de passe est incorrect !")),
+                              );
+                            }
+                          }
+                      }
+                    }
                   },
-                  child: const Text('Register'),
+                  child: const Text('Changer'),
                 ),
               ],
             ),
