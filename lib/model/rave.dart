@@ -7,31 +7,31 @@ class Rave {
     'theme': '',
     'picture': '',
     'date': '',
-    'validate': '',
+    'validate': false,
   };
 
   Rave setTheme(String theme) {
-    data.update('theme', (value) => theme);
+    data.update('theme', (value) => theme, ifAbsent: () => theme);
     return this;
   }
 
   Rave setPicture(String picture) {
-    data.update('picture', (value) => picture);
+    data.update('picture', (value) => picture, ifAbsent: () => picture);
     return this;
   }
 
   Rave setDate(String date) {
-    data.update('date', (value) => date);
+    data.update('date', (value) => date, ifAbsent: () => date);
     return this;
   }
 
-  Rave setValidate(String validation) {
-    data.update('validate', (value) => validation);
+  Rave setValidate(bool validation) {
+    data.update('validate', (value) => validation, ifAbsent: () => validation);
     return this;
   }
 
-  String getId() {
-    return data['_id'];
+  String? getId() {
+    return data['_id']?.toString();
   }
 
   String getTheme() {
@@ -50,30 +50,46 @@ class Rave {
     return data['validate'];
   }
 
-  Future<Rave> findById(id) async {
-    var currentObjectId = id is String ? ObjectId.fromHexString(id) : id;
+  Future<Rave> findById(String id) async {
+    var currentObjectId = ObjectId.fromHexString(id);
     List<Map<String, dynamic>> list =
         await Database().findByField(collection, '_id', currentObjectId);
-    data.addAll(list[0]);
+
+    if (list.isNotEmpty) {
+      data.addAll(list[0]);
+    }
     return this;
   }
 
   Future<Rave> findFirstByField(String field, dynamic value) async {
     List<Map<String, dynamic>> list =
         await Database().findByField(collection, field, value);
-    data.addAll(list[0]);
+
+    if (list.isNotEmpty) {
+      data.addAll(list[0]);
+    }
     return this;
   }
 
   Future<List<Map<String, dynamic>>> findAllByField(
       String field, dynamic value) async {
-    List<Map<String, dynamic>> list =
-        await Database().findByField(collection, field, value);
-    return list;
+    return await Database().findByField(collection, field, value);
   }
 
-  void insert() {
-    if (data.isEmpty) throw ('Missing data');
-    Database().add(collection, data);
+  Future<void> update() async {
+    if (data.containsKey('_id') && data['_id'] != null) {
+      var objectId = data['_id'] as ObjectId;
+      await Database().update(collection, objectId, data);
+    } else {
+      throw Exception(
+          "Impossible de mettre à jour : l'identifiant est manquant.");
+    }
+  }
+
+  Future<void> insert() async {
+    if (data.values.any((value) => value == '')) {
+      throw ('Données incomplètes : tous les champs doivent être remplis avant l\'insertion');
+    }
+    await Database().add(collection, data);
   }
 }

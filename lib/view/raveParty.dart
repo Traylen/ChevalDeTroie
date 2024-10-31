@@ -12,9 +12,6 @@ class _RavepartyState extends State<Raveparty> {
 
   String? _selectedOption1;
   DateTime? _selectedDate;
-  TimeOfDay? _selectedTime;
-  bool? validate;
-
   final TextEditingController _PPController = TextEditingController();
 
   final List<String> _dropdownOptions1 = ['Apéro', 'Repas'];
@@ -34,24 +31,6 @@ class _RavepartyState extends State<Raveparty> {
     }
   }
 
-  Future<void> _pickTime(BuildContext context) async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-      builder: (BuildContext context, Widget? child) {
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-          child: child!,
-        );
-      },
-    );
-    if (picked != null && picked != _selectedTime) {
-      setState(() {
-        _selectedTime = picked;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +45,7 @@ class _RavepartyState extends State<Raveparty> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Dropdown 1
+                // Dropdown
                 DropdownButtonFormField<String>(
                   decoration: InputDecoration(labelText: 'Thème de la soirée'),
                   value: _selectedOption1,
@@ -85,6 +64,7 @@ class _RavepartyState extends State<Raveparty> {
                       value == null ? 'Veuillez choisir une option' : null,
                 ),
                 SizedBox(height: 20),
+
                 TextFormField(
                   controller: _PPController,
                   decoration: InputDecoration(labelText: 'URL de photo'),
@@ -123,24 +103,31 @@ class _RavepartyState extends State<Raveparty> {
                 ),
                 SizedBox(height: 20),
 
-                SizedBox(height: 20),
-
+                // Submit Button
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      Rave()
-                          .setTheme(_selectedOption1!)
-                          .setPicture(_PPController.text)
-                          .setDate(
-                              DateFormat('yyyy-MM-dd').format(_selectedDate!))
-                          .setValidate('False')
-                          .insert();
+                      try {
+                        Rave()
+                            .setTheme(_selectedOption1!)
+                            .setPicture(_PPController.text)
+                            .setDate(
+                                DateFormat('yyyy-MM-dd').format(_selectedDate!))
+                            .setValidate(false)
+                            .insert();
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Leçon ajoutée avec succès"),
-                        ),
-                      );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Rave ajoutée avec succès"),
+                          ),
+                        );
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Erreur : ${e.toString()}"),
+                          ),
+                        );
+                      }
                     }
                   },
                   child: Text("Envoyer"),
