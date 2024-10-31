@@ -123,7 +123,7 @@ class _RegisterState extends State<Register> {
                 TextFormField(
                   controller: _PPController,
                   decoration: const InputDecoration(
-                      labelText: 'Url photo de profil sale pd'),
+                      labelText: 'Url photo de profil'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez remplir ce champ';
