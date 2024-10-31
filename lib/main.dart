@@ -1,6 +1,6 @@
 import 'dart:developer' as developer;
 
-import 'package:chevaldetroie/view/home/homePage.dart';
+import 'package:chevaldetroie/view/authentification/login.dart';
 import 'package:chevaldetroie/view/login.dart';
 import 'package:chevaldetroie/view/raveParty.dart';
 import 'package:chevaldetroie/view/register.dart';
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: const FormPage(),
-      home: const HomePage(),
+      home: const FormPage(),
     );
   }
 }
