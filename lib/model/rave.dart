@@ -95,6 +95,11 @@ class Rave {
     return this;
   }
 
+  Future<List<Map<String, dynamic>>> getAll() async {
+    List<Map<String, dynamic>> list = await Database().findAll(collection);
+    return list;
+  }
+
   Future<List<Map<String, dynamic>>> findAllByField(
       String field, dynamic value) async {
     return await Database().findByField(collection, field, value);
