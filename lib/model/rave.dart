@@ -14,6 +14,10 @@ class Rave {
     'commentaire': []
   };
 
+  Future<void> edtiRave(id, participant, field) async {
+    await Database().updateOne(collection, id, participant, field);
+  }
+
   Rave setTheme(String theme) {
     data.update('theme', (value) => theme, ifAbsent: () => theme);
     return this;
