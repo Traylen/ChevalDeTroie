@@ -108,7 +108,7 @@ class Rave {
   Future<void> update() async {
     if (data.containsKey('_id') && data['_id'] != null) {
       var objectId = data['_id'] as ObjectId;
-      await Database().update(collection, objectId, data);
+      await Database().update(collection, objectId, data['name'], data['age'], data['phone']);
     } else {
       throw Exception(
           "Impossible de mettre à jour : l'identifiant est manquant.");

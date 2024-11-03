@@ -3,7 +3,6 @@ import 'package:chevaldetroie/view/authentification/login.dart';
 import 'package:flutter/material.dart';
 import 'profileEdit.dart';
 import 'horseManagement/myHorsesPage.dart';
-import '../view/login.dart';
 
 class Userprofile extends StatefulWidget {
   final test;
