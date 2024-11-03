@@ -4,7 +4,6 @@ import 'package:chevaldetroie/View/home/homePage.dart';
 import 'package:chevaldetroie/model/users.dart';
 import 'package:chevaldetroie/view/authentification/forgot_pswd.dart';
 import 'package:chevaldetroie/view/authentification/register.dart';
-import 'package:chevaldetroie/view/home/homePage.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 

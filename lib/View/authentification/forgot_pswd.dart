@@ -136,8 +136,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           .insert();
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePage()),
+                              MaterialPageRoute(
+                                  builder: (context) => HomePage(
+                                        userId: login.getId(),
+                                        username: login.getName(),
+                                      )),
                             );
                             ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text("Votre mot de passe à bien été modifié")),
