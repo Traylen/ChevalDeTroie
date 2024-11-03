@@ -46,6 +46,15 @@ dependencies:
   intl: ^0.19.0
   table_calendar: ^3.1.2
 
+flutter_native_splash:
+  android: true
+  ios: true
+  web: false
+
+  color: "#757BC8"
+  image: "assets/logo_proj.png"
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -59,6 +68,10 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo_launcher.png"
 
 # The following section is specific to Flutter packages.
 flutter:
