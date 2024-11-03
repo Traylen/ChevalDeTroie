@@ -1,4 +1,5 @@
 import 'package:chevaldetroie/model/users.dart';
+import 'package:chevaldetroie/view/authentification/login.dart';
 import 'package:flutter/material.dart';
 import 'profileEdit.dart';
 import 'horseManagement/myHorsesPage.dart';
@@ -35,7 +36,6 @@ class _UserprofileState extends State<Userprofile> {
       context,
       MaterialPageRoute(
           builder: (context) =>
-              LoginPage()), // Remplacez par votre page de connexion
               FormPage()), // Remplacez par votre page de connexion
     );
   }

@@ -1,10 +1,12 @@
+import 'package:bson/src/classes/object_id.dart';
 import 'package:flutter/material.dart';
 import 'package:chevaldetroie/model/horse.dart';
 import 'package:chevaldetroie/model/users.dart';
 
 class AddHorse extends StatefulWidget {
   final userId;
-  const AddHorse({Key? key, required this.userId}) : super(key: key);
+  const AddHorse({Key? key, required this.userId, required ObjectId ownerId})
+      : super(key: key);
 
   @override
   _AddHorseState createState() => _AddHorseState();

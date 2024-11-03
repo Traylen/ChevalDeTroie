@@ -105,11 +105,16 @@ class Users {
   }
 
   Future<Users> findById(id) async {
+    if (id == null || !(id is String || id is ObjectId)) {
+      throw Exception("L'ID fourni est invalide.");
+    }
+
     var currentObjectId = id is String ? ObjectId.fromHexString(id) : id;
+    print('Searching for user with ID: $currentObjectId');
+
     List<Map<String, dynamic>> list =
         await Database().findByField(collection, '_id', currentObjectId);
 
-    // Vérifie si la liste n'est pas vide avant de tenter d'ajouter les données
     if (list.isNotEmpty) {
       data.addAll(list[0]);
     } else {
