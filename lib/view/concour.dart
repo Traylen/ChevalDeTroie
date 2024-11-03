@@ -122,19 +122,13 @@ class _ConcourState extends State<Concour> {
                           .insert();
 
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           content: Text("Leçon ajoutée avec succès"),
                         ),
                       );
                     }
                   },
-                  // concour()
-                  // .setName(_selectedName)
-                  // .setAdresse(_adresseController)
-                  // .setPicture()
-                  // .setDate(_selectedDate)
                   child: const Text('Envoyer'),
-
                 ),
               ],
             ),

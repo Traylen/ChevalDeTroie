@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:chevaldetroie/model/database.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
@@ -8,6 +10,8 @@ class Rave {
     'picture': '',
     'date': '',
     'validate': false,
+    'participants': [],
+    'commentaire': []
   };
 
   Rave setTheme(String theme) {
@@ -30,8 +34,8 @@ class Rave {
     return this;
   }
 
-  String? getId() {
-    return data['_id']?.toString();
+  ObjectId getId() {
+    return data['_id'];
   }
 
   String getTheme() {
@@ -50,8 +54,24 @@ class Rave {
     return data['validate'];
   }
 
-  Future<Rave> findById(String id) async {
-    var currentObjectId = ObjectId.fromHexString(id);
+  getParticipants() {
+    return data['participants'];
+  }
+
+  int getLengthParticipants() {
+    return data['participants'].length;
+  }
+
+  getCommentaire() {
+    return data['commentaire'];
+  }
+
+  int getLengthCommentaire() {
+    return data['commentaire'].length;
+  }
+
+  Future<Rave> findById(id) async {
+    var currentObjectId = id is String ? ObjectId.fromHexString(id) : id;
     List<Map<String, dynamic>> list =
         await Database().findByField(collection, '_id', currentObjectId);
 

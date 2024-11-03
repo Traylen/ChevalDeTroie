@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class HorseLesson extends StatefulWidget {
+  const HorseLesson({super.key});
+
   @override
   _HorseLessonState createState() => _HorseLessonState();
 }
@@ -63,11 +65,11 @@ class _HorseLessonState extends State<HorseLesson> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Horse Lesson'),
+        title: const Text('Horse Lesson'),
       ),
       body: Center(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Form(
             key: _formKey,
             child: Column(
@@ -75,8 +77,8 @@ class _HorseLessonState extends State<HorseLesson> {
               children: [
                 // Dropdown 1
                 DropdownButtonFormField<String>(
-                  decoration:
-                      InputDecoration(labelText: 'Sélectionner un terrain'),
+                  decoration: const InputDecoration(
+                      labelText: 'Sélectionner un terrain'),
                   value: _selectedOption1,
                   items: _dropdownOptions1.map((String value) {
                     return DropdownMenuItem<String>(
@@ -92,11 +94,11 @@ class _HorseLessonState extends State<HorseLesson> {
                   validator: (value) =>
                       value == null ? 'Veuillez choisir une option' : null,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // Dropdown 2
                 DropdownButtonFormField<String>(
-                  decoration: InputDecoration(labelText: 'Type de leçon'),
+                  decoration: const InputDecoration(labelText: 'Type de leçon'),
                   value: _selectedOption2,
                   items: _dropdownOptions2.map((String value) {
                     return DropdownMenuItem<String>(
@@ -112,11 +114,11 @@ class _HorseLessonState extends State<HorseLesson> {
                   validator: (value) =>
                       value == null ? 'Veuillez choisir une option' : null,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // Dropdown 3 (Durée)
                 DropdownButtonFormField<String>(
-                  decoration: InputDecoration(labelText: 'Durée'),
+                  decoration: const InputDecoration(labelText: 'Durée'),
                   value: _selectedOption3,
                   items: _dropdownOptions3.map((String value) {
                     return DropdownMenuItem<String>(
@@ -132,7 +134,7 @@ class _HorseLessonState extends State<HorseLesson> {
                   validator: (value) =>
                       value == null ? 'Veuillez choisir une option' : null,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // Date Picker
                 Row(
@@ -153,19 +155,19 @@ class _HorseLessonState extends State<HorseLesson> {
                       ),
                     ),
                     IconButton(
-                      icon: Icon(Icons.calendar_today),
+                      icon: const Icon(Icons.calendar_today),
                       onPressed: () => _pickDate(context),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // Time Picker
                 Row(
                   children: [
                     Expanded(
                       child: TextFormField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Sélectionner une heure',
                           // hintText: _selectedTime != null
                           //     ? _selectedTime!.format(context)
@@ -179,12 +181,12 @@ class _HorseLessonState extends State<HorseLesson> {
                       ),
                     ),
                     IconButton(
-                      icon: Icon(Icons.access_time),
+                      icon: const Icon(Icons.access_time),
                       onPressed: () => _pickTime(context),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
@@ -198,13 +200,13 @@ class _HorseLessonState extends State<HorseLesson> {
                           .setValidate('False')
                           .insert();
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           content: Text("Leçon ajoutée avec succès"),
                         ),
                       );
                     }
                   },
-                  child: Text("Envoyer"),
+                  child: const Text("Envoyer"),
                 ),
               ],
             ),

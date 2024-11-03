@@ -4,6 +4,7 @@ import 'package:chevaldetroie/View/home/homePage.dart';
 import 'package:chevaldetroie/model/users.dart';
 import 'package:chevaldetroie/view/authentification/forgot_pswd.dart';
 import 'package:chevaldetroie/view/authentification/register.dart';
+import 'package:chevaldetroie/view/home/homePage.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 
@@ -127,7 +128,10 @@ class _FormPageState extends State<FormPage> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const HomePage()),
+                                  builder: (context) => HomePage(
+                                        userId: login.getId(),
+                                        username: login.getName(),
+                                      )),
                             );
                           }
                           if (login.getPassword() != ash) {
@@ -158,7 +162,6 @@ class _FormPageState extends State<FormPage> {
                           RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       )),
-                      // minimumSize: ,
                       minimumSize: WidgetStateProperty.all(const Size(380, 45)),
                       padding: WidgetStateProperty.all<EdgeInsets>(
                           const EdgeInsets.symmetric(horizontal: 44)),

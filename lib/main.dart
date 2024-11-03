@@ -1,8 +1,12 @@
-import 'package:chevaldetroie/View/authentification/register.dart';
+import 'dart:developer' as developer;
+import 'package:chevaldetroie/view/authentification/login.dart';
+import 'package:chevaldetroie/view/home/homePage.dart';
+import 'package:chevaldetroie/view/raveParty.dart';
+import 'package:chevaldetroie/model/database.dart';
+import 'package:chevaldetroie/model/roles.dart';
+import 'package:chevaldetroie/model/users.dart';
+
 import 'package:flutter/material.dart';
-import 'view/authentification/login.dart';
-import 'view/home/createForm.dart';
-import 'view/home/homePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +24,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: FormPage(),
     );
   }
 }
