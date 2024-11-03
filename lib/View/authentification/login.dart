@@ -1,9 +1,9 @@
 import 'dart:convert';
 
+import 'package:chevaldetroie/View/home/homePage.dart';
 import 'package:chevaldetroie/model/users.dart';
 import 'package:chevaldetroie/view/authentification/forgot_pswd.dart';
 import 'package:chevaldetroie/view/authentification/register.dart';
-import 'package:chevaldetroie/view/register.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 
@@ -127,7 +127,7 @@ class _FormPageState extends State<FormPage> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const RegisterPage()),
+                                  builder: (context) => const HomePage()),
                             );
                           }
                           if (login.getPassword() != ash) {

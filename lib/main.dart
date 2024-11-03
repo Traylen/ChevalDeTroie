@@ -1,3 +1,4 @@
+import 'package:chevaldetroie/View/authentification/register.dart';
 import 'package:flutter/material.dart';
 import 'view/authentification/login.dart';
 import 'view/home/createForm.dart';
