@@ -7,6 +7,7 @@ import 'package:mongo_dart/mongo_dart.dart';
 class Users {
   final String collection = "user";
   Map<String, dynamic> data = <String, dynamic>{
+    'id': '',
     'name': '',
     'email': '',
     'password': '',
@@ -84,7 +85,7 @@ class Users {
   }
 
   int getAge() {
-    return data['age'];
+    return int.tryParse(data['age'].toString()) ?? 0;
   }
 
   String getPhone() {
@@ -104,17 +105,37 @@ class Users {
   }
 
   Future<Users> findById(id) async {
+    if (id == null || !(id is String || id is ObjectId)) {
+      throw Exception("L'ID fourni est invalide.");
+    }
+
     var currentObjectId = id is String ? ObjectId.fromHexString(id) : id;
+    print('Searching for user with ID: $currentObjectId');
+
     List<Map<String, dynamic>> list =
         await Database().findByField(collection, '_id', currentObjectId);
-    data.addAll(list[0]);
+
+    if (list.isNotEmpty) {
+      data.addAll(list[0]);
+    } else {
+      throw Exception("Aucun utilisateur trouvé avec cet identifiant.");
+    }
+
     return this;
   }
 
   Future<Users> findFirstByField(field, value) async {
     List<Map<String, dynamic>> list =
         await Database().findByField(collection, field, value);
-    data.addAll(list[0]);
+
+    // Vérifie si la liste n'est pas vide avant d'ajouter les données
+    if (list.isNotEmpty) {
+      data.addAll(list[0]);
+    } else {
+      throw Exception(
+          "Aucun utilisateur trouvé pour $field avec la valeur $value.");
+    }
+
     return this;
   }
 
@@ -123,6 +144,10 @@ class Users {
         await Database().findByField(collection, field, value);
     return list;
   }
+
+  // Future<void> editProfile(id, field) async {
+  //   await Database().updateOne(collection, id, field);
+  // }
 
   void insert() {
     if (data.isEmpty) throw ('Missing data');
